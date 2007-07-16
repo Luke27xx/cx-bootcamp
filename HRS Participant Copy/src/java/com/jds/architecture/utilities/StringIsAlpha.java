@@ -41,7 +41,7 @@ public class StringIsAlpha implements  ValidationStrategy {
 				return false;
 		}
 		
-		return true;
+		return false;
 	}
 
 }
