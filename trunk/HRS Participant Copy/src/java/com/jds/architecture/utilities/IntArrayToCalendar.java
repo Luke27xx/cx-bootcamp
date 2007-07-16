@@ -36,8 +36,10 @@ public class IntArrayToCalendar implements  TransformStrategy {
 	 */
 	public Object transform(Object target) {
 		// TODO Auto-generated method stub
-	
-        return null;
+		int[] som = (int[])target;
+		Calendar a = Calendar.getInstance();
+		a.set(som[0], som[1]-1, som[2]);
+		return a;
 		
 	}
 
