@@ -40,9 +40,17 @@ public class StringArrayToCalendar implements  TransformStrategy {
 	 * @return instance of a Calendar based on the argument array.
 	 */
 	public Object transform(Object target) {
-	
-        
-		return null;
+		
+		String[] som = (String[])target;
+		Calendar a = Calendar.getInstance();
+		a.set(Integer.parseInt(som[0]), Integer.parseInt(som[1])-1, Integer.parseInt(som[2]));
+		
+		/*Calendar.YEAR =  Integer.parseInt(som[0]);
+		Calendar.MONTH = Integer.parseInt(som[1]);*/
+		//Calendar.da = Integer.parseInt(som[3]);
+		//Calendar somethin = ;
+		//Calendar.YEAR = target;
+		return a;
 	}
 
 }
