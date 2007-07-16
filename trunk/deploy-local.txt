@@ -1,1 +1,0 @@
-OK - Deployed application at context path /hrs
