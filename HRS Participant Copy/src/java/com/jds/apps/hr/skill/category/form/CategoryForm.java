@@ -40,9 +40,6 @@ public class CategoryForm extends AbstractCategoryForm {
         
         Validator objectIsNull        =  new Validator( new ObjectIsNull() );
         Validator stringIsEmpty       =  new Validator ( new StringIsEmpty() );
-        //Validator calendarIsValid     =  new Validator( new CalendarIsValid() );
-
-        //Validator stringIsValidC = new Validator( new StringIsAlphaNumeric() );
         Validator stringIsValidD = new Validator( new StringIsValid("_- .") );
         
         String allowedCharactersC = "letters & numbers";
@@ -60,7 +57,7 @@ public class CategoryForm extends AbstractCategoryForm {
         else if( !stringLengthIsValidFifty.validate( this.getCategory() ) ){
 			errors.add("category", new ActionError("field.invalid.length", "Category", "50"));        	
         }      
-        
+
         if( objectIsNull.validate(this.getDescription() ) ||
                 stringIsEmpty.validate( this.getDescription() ) ){
         	errors.add("description", new ActionError("field.null","Description"));
