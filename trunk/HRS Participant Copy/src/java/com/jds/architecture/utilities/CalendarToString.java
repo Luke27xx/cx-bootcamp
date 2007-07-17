@@ -58,9 +58,25 @@ public class CalendarToString implements TransformStrategy{
 	 * 
 	 */
 	public Object transform(Object target) {
+		Calendar tmp;
+		Date tmp2;
+				
+		String str = new String();
+		
+		if (target instanceof Calendar){
+			tmp = (Calendar)target;			
+			str = df.format(tmp.getTime());					
+		
+		}else if (target instanceof Date){
+			tmp2 = (Date)target;
+			str = df.format(tmp2.getTime());
+		
+		}else{
+			throw new ClassCastException();
+		}
+		
+		return str;	
 	
-	    
-        return null;
 	}
 
 }
