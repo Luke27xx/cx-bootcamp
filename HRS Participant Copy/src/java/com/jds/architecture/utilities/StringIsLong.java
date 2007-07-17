@@ -30,10 +30,14 @@ public class StringIsLong implements  ValidationStrategy{
 	 * @return boolean true if the object can be parsed as a long, false otherwise
 	 */
 	public boolean validate(Object target) {
-		
-	    
-        return false;
-		
+		try 
+		{
+			Long tmpLong = Long.parseLong(target.toString());
+		}
+			catch (NumberFormatException ex)
+			{
+				return false;
+			}
+		return true;
 	}
-
 }
