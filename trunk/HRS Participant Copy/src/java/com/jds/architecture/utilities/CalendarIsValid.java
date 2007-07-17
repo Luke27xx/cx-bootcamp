@@ -38,9 +38,13 @@ public class CalendarIsValid implements ValidationStrategy  {
 	 * 
 	 */
 	public boolean validate(Object target){
-		
+		int[] som;
 		try {
-		int[] som = (int[])target;
+			som = (int[])target;
+		} catch (Exception e) {
+			throw new ClassCastException();
+		}
+		try {
 		Calendar gc = Calendar.getInstance();
 		gc.setLenient(false);
 		gc.set(som[0], som[1]-1,som[2]);
