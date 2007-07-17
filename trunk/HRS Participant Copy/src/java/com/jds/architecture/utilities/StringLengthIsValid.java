@@ -48,10 +48,27 @@ public class StringLengthIsValid implements ValidationStrategy{
 	 */
 	public boolean validate(Object target) {
 		
-		
-		
-		return false;
+	
+	String tmp;
+	tmp=new String((String) target);
+
+	int dlina;
+	dlina = tmp.length();
+
+	if (maxLength < 0 ) return true;
+	
+	if (dlina > maxLength) {return false;}	
+		return true;
 		
 	}
+
+
+
+
+
+
+	
+	
+	
 
 }

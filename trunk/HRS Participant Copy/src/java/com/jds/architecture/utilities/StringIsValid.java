@@ -1,3 +1,4 @@
+
 /*
  * Created on Feb 16, 2005
  *
@@ -57,7 +58,9 @@ public class StringIsValid implements ValidationStrategy{
 		
 
 		for(int i = 0; i < targetLen; i++){
-			if(Character.isLetterOrDigit(charArray[i]) || specialCharIsOK(charArray[i])){
+			if(Character.isLetterOrDigit(charArray[i]) || 
+
+specialCharIsOK(charArray[i])){
 			   	continue;
 			}
 			else{
@@ -70,9 +73,17 @@ public class StringIsValid implements ValidationStrategy{
 	
 	private boolean specialCharIsOK(char c){
 		
-		
+	
+	
+		for (int i=0; i<specialChars.length(); i++)
+		{
+			if (specialChars.charAt(i)==c) {return true;}
+		}
+	
 		return false;
 	}
+
+
 	
 	
 }
