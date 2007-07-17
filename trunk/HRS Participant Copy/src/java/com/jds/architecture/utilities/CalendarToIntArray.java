@@ -37,7 +37,10 @@ public class CalendarToIntArray implements TransformStrategy {
 	 */
 	public Object transform(Object target) {
 		
-		int[] som;
+		
+		//setTimeInMillis(target);
+		
+		int[]som;
 		try {
 			som = (int[])target;
 		} catch (Exception e) {
