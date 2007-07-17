@@ -13,7 +13,9 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 
 import com.jds.apps.hr.skill.category.form.ext.AbstractCategoryForm;
+import com.jds.architecture.utilities.CalendarIsValid;
 import com.jds.architecture.utilities.ObjectIsNull;
+import com.jds.architecture.utilities.StringIsAlphaNumeric;
 import com.jds.architecture.utilities.StringIsEmpty;
 import com.jds.architecture.utilities.StringIsValid;
 import com.jds.architecture.utilities.StringLengthIsValid;
@@ -35,10 +37,43 @@ public class CategoryForm extends AbstractCategoryForm {
 			HttpServletRequest request) {
 
         ActionErrors errors = new ActionErrors();
-  
-       //TODO: Implement validation
+        
+        Validator objectIsNull        =  new Validator( new ObjectIsNull() );
+        Validator stringIsEmpty       =  new Validator ( new StringIsEmpty() );
+        //Validator calendarIsValid     =  new Validator( new CalendarIsValid() );
+
+        //Validator stringIsValidC = new Validator( new StringIsAlphaNumeric() );
+        Validator stringIsValidD = new Validator( new StringIsValid("_- .") );
+        
+        String allowedCharactersC = "letters & numbers";
+        String allowedCharactersD = allowedCharactersC + ", underscores, dashes, spaces, dots ";
+        Validator stringLengthIsValidFifty       = new Validator( new StringLengthIsValid(50) );   
+        
+        
+        if( objectIsNull.validate(this.getCategory() ) ||
+                stringIsEmpty.validate( this ) ){
+        	errors.add("category", new ActionError("field.null","Category"));
+        }
+        else if( !stringIsValidD.validate( this.getCategory() ) ){
+			errors.add("category", new ActionError("field.invalid.specialcharacter", "Category", allowedCharactersD));
+        }
+        else if( !stringLengthIsValidFifty.validate( this.getCategory() ) ){
+			errors.add("category", new ActionError("field.invalid.length", "Category", "50"));        	
+        }      
+        
+        if( objectIsNull.validate(this.getDescription() ) ||
+                stringIsEmpty.validate( this.getDescription() ) ){
+        	errors.add("description", new ActionError("field.null","Description"));
+        }
+        else if( !stringIsValidD.validate( this.getDescription() ) ){
+			errors.add("description", new ActionError("field.invalid.specialcharacter", "Description", allowedCharactersD));
+        }
+        else if( !stringLengthIsValidFifty.validate( this.getDescription() ) ){
+			errors.add("description", new ActionError("field.invalid.length", "Description", "50"));        	
+        }
         
 		return errors;
+        
 	}
 	
 }
