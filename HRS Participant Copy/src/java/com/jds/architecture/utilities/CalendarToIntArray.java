@@ -37,8 +37,26 @@ public class CalendarToIntArray implements TransformStrategy {
 	 */
 	public Object transform(Object target) {
 		
-		//muahagagagaga
-        return null;
+		int[] som;
+		try {
+			som = (int[])target;
+		} catch (Exception e) {
+			throw new ClassCastException();
+		}
+		try {
+		Calendar gc = Calendar.getInstance();
+		gc.setLenient(false);
+		gc.set(som[0], som[1]+1,som[2]);
+		gc.getTime();
+		return som;
+				}
+		catch (Exception e)
+		{
+			return som;
+			}
+			
+		
+        
 		
 	}
 }
