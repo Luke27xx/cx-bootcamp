@@ -49,6 +49,27 @@ public class SearchCategoryForm extends AbstractCategorySearchForm {
 	     
 //        TODO Implement validation
 	        
+
+	        Validator objectIsNull        =  new Validator( new ObjectIsNull() );
+	        Validator stringIsEmpty       =  new Validator ( new StringIsEmpty() );
+	        Validator stringIsValidD = new Validator( new StringIsValid("_- .") );
+	        
+	        String allowedCharactersC = "letters & numbers";
+	        String allowedCharactersD = allowedCharactersC + ", underscores, dashes, spaces, dots ";
+	        Validator stringLengthIsValidFifty       = new Validator( new StringLengthIsValid(50) );   
+	        
+	        
+	        if( objectIsNull.validate(this.getCategoryCriteria() ) ||
+	                stringIsEmpty.validate( this.getCategoryCriteria() ) ){
+	        	errors.add("invalidAll", new ActionError("search.criteria.null","Category"));
+	        }
+	        else if( !stringIsValidD.validate( this.getCategoryCriteria() ) ){
+				errors.add("category", new ActionError("field.invalid.specialcharacter", "Category", allowedCharactersD));
+	        }
+	        else if( !stringLengthIsValidFifty.validate( this.getCategoryCriteria() ) ){
+				errors.add("category", new ActionError("search.criteria.invalid.length.", "Category", "50"));
+	        }	        
+	        
 	        return errors;
 	     }
 	
