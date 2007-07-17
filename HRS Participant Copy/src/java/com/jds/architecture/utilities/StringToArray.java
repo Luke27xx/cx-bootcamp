@@ -1,8 +1,7 @@
-/*
- * Created on Feb 7, 2005
- */
+
 package com.jds.architecture.utilities;
 
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
@@ -42,8 +41,33 @@ public class StringToArray implements TransformStrategy{
 	 * @return String array containing the substring components of the argument
 	 */
 	public Object transform(Object target) {
-	
-		return null;
+		//String[] arr2 = new String;
+		ArrayList arr = new ArrayList();
+		
+		StringTokenizer st = new StringTokenizer(target.toString(), delim);
+		
+		/*while(st.hasMoreTokens()){
+			arr.add(st.nextToken());
+		}*/
+		//int i = 0;
+		
+		while(st.hasMoreTokens()){
+			//arr2[i] = st.nextToken();
+			arr.add(st.nextToken());
+			//i++;
+		}
+		
+		int i = arr.size();
+		String[] ss = new String[i]; 
+		
+		for (i = 0; i < arr.size(); i++) {
+			ss[i] = arr.get(i).toString();
+		}
+		
+		
+		
+		return ss;
+		//return null;
 		
 	}
 
