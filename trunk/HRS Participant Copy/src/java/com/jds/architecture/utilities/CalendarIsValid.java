@@ -4,8 +4,6 @@
 package com.jds.architecture.utilities;
 import java.util.Calendar;
 
-import sun.org.mozilla.javascript.internal.ObjToIntMap;
-
 /**
  * Validation strategy object used to determine the validity of a given date.  
  * This strategy object uses a non-lenient <code>java.util.Calendar</code> instance
@@ -39,16 +37,22 @@ public class CalendarIsValid implements ValidationStrategy  {
 	 *
 	 * 
 	 */
-	public boolean validate(Object target) {
-		Integer objectInteger = (Integer) target;
-		int counter = objectInteger.intValue();
-	
-if (counter>0)
+	public boolean validate(Object target){
 		
-		
+		try {
+		int[] som = (int[])target;
+		Calendar gc = Calendar.getInstance();
+		gc.setLenient(false);
+		gc.set(som[0], som[1]-1,som[2]);
+		gc.getTime();
 		return true;
-else return false;
-		
+				}
+		catch (Exception e)
+		{
+			return false;
+			}
+			
+
 		
 		
 	}
