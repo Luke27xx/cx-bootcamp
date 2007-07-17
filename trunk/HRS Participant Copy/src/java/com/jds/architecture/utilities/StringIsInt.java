@@ -31,11 +31,14 @@ public class StringIsInt implements  ValidationStrategy{
 	 * @return boolean true if the object can be parsed as an integer, false otherwise
 	 */
 	public boolean validate(Object target) {
-		
-	
-		
-		return false;
-		
+		try 
+		{
+			Integer tmpInt = Integer.parseInt(target.toString());
+		}
+			catch (NumberFormatException ex)
+			{
+				return false;
+			}
+		return true;
 	}
-
 }
