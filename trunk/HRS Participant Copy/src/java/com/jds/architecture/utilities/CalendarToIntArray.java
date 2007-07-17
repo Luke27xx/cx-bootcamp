@@ -36,28 +36,31 @@ public class CalendarToIntArray implements TransformStrategy {
 	 *
 	 */
 	public Object transform(Object target) {
+		int year;
+		int month;
+		int day;
 		
-		
-		//setTimeInMillis(target);
-		
-		int[]som;
-		try {
-			som = (int[])target;
-		} catch (Exception e) {
-			throw new ClassCastException();
+		Calendar cal = Calendar.getInstance();
+		//Calendar calTarget = null;
+		if (target.getClass().equals(java.sql.Date.class)){
+			Calendar calTarget = Calendar.getInstance();
+			calTarget.setTime((Date)target);
+			year = calTarget.get(cal.YEAR);
+		    month = calTarget.get(cal.MONTH);
+		    day = calTarget.get(cal.DAY_OF_MONTH);
+		} else {
+			Calendar calTarget = (Calendar)target;
+			year = calTarget.get(cal.YEAR);
+		    month = calTarget.get(cal.MONTH);
+		    day = calTarget.get(cal.DAY_OF_MONTH);
 		}
-		try {
-		Calendar gc = Calendar.getInstance();
-		gc.setLenient(false);
-		gc.set(som[0], som[1]+1,som[2]);
-		gc.getTime();
-		return som;
-				}
-		catch (Exception e)
-		{
-			return som;
-			}
-			
+				
+		int[] som = new int[3];
+		som[0] = year;
+		som[1] = month+1;
+		som[2] = day;
+		
+		return som;	
 		
         
 		
