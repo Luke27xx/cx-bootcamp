@@ -184,9 +184,45 @@ public class EmployeeDAO implements DataAccessObjectInterface {
 	}
 
     public RowSet findByAll() throws DAOException {
+    	String sqlStmt = DAOConstants.EMPSQL_FIND_ALL;
+		EmployeeInfo employeeReturn = null;
+/*
+		if (!(object instanceof String))
+			throw new DAOException ("invalid.object.empdao",
+					null, DAOException.ERROR, true);
+*/				
+//		String pk = (String) object;				
+		Connection conn = null;
+
+			try{
+				log.debug("finding all EmployeeInfo entries");
+				conn = dbAccess.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+//				stmt.setString(1, pk);
+				ResultSet rs = stmt.executeQuery();
+				
+				while (rs.next()) {
+					employeeReturn = EmployeeAssembler.getInfo(rs);
+				}
+				
+				rs.close();
+				log.debug("found by pk EmployeeInfo entry");//zamenitj
+			} catch (DBAccessException e){
+				throw new DAOException (e.getMessageKey(),
+					e, DAOException.ERROR, true);				
+			} catch (SQLException e) {
+				throw new DAOException ("sql.findpk.exception.empdao",
+				e, DAOException.ERROR, true);
+			} finally {
+				try {
+					dbAccess.closeConnection(conn);
+				} catch (DBAccessException e1) {
+
+				}
+			}
+
+		return (RowSet)employeeReturn;
         
-        
-        return null;
     }
 	
 
