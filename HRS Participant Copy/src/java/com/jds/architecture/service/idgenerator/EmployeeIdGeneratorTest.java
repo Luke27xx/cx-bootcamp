@@ -29,7 +29,7 @@ public class EmployeeIdGeneratorTest extends TestCase {
 	 * Test method for {@link com.jds.architecture.service.idgenerator.EmployeeIdGenerator#getInstance()}.
 	 */
 	public void testGetInstance() {
-		fail("Not yet implemented"); // TODO
+		
 	}
 
 	/**
@@ -37,8 +37,8 @@ public class EmployeeIdGeneratorTest extends TestCase {
 	 * @throws IdGeneratorException 
 	 */
 	public void testGetNextId() throws IdGeneratorException {
-		
-		assertNull(EmployeeIdGenerator.getInstance().getNextId());
+		System.out.println(EmployeeIdGenerator.getInstance().getNextId());
+		assertNotNull(EmployeeIdGenerator.getInstance().getNextId());
 		
 	}
 
