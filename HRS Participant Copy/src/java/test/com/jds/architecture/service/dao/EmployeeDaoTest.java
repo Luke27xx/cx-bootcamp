@@ -18,11 +18,14 @@ import com.jds.architecture.service.dbaccess.DBAccessException;
 import junit.framework.TestCase;
 
 public class EmployeeDaoTest extends EmployeeDAO {
-	
+	Connection conn = null;
+	final static String url = "jdbc:oracle:thin:@10.122.131.216:1521:XE";
+	Statement stmt = null;
+	ResultSet rset = null;
 
 	public EmployeeDaoTest() throws DAOException, DBAccessException {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
@@ -62,63 +65,72 @@ public class EmployeeDaoTest extends EmployeeDAO {
 		return super.findByAll();
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException,
-			SQLException {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		// DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-		String url = "jdbc:oracle:thin:@10.122.131.216:1521:XE";
+	public EmployeeInfo myCreate() throws ClassNotFoundException, SQLException {
+		EmployeeInfo employee = new EmployeeInfo();
+		myConnect();
 
-		Connection conn = DriverManager.getConnection(url, "sampleuser",
-				"samplepassword");
 		try {
-			EmployeeDaoTest ex = new EmployeeDaoTest();
-			// System.out.print(">>>>>>>>>>>>"+ex.findByPK("123"));
 
-			EmployeeInfo employee = new EmployeeInfo();
+			// EmployeeInfo employee = new EmployeeInfo();
+			EmployeeDaoTest ex = new EmployeeDaoTest();
 			Date dates = new Date();
-			
-			employee.setEmpNo("789");
-			employee.setFirstName("xz1");
-			employee.setLastName("zx1");
-			employee.setMiddleName("sa1");
+
+			employee.setEmpNo(""+Math.round(Math.random()*1000));
+			employee.setFirstName(""+Math.round(Math.random()*1000));
+			employee.setLastName(""+Math.round(Math.random()*1000));
+			employee.setMiddleName(""+Math.round(Math.random()*1000));
 			employee.setDob(dates);
-			employee.setAge(111);
-			employee.setGender('x');
-			employee.setCivilStatus("shit1");
-			employee.setCitizenship("dog1");
-			employee.setSssNo("1451");
-			employee.setTinNo("5211");
-			employee.setMobilePhoneNo("347681");
-			employee.setHomePhoneNo("1111");
-			employee.setStreet1("gg1g");
-			employee.setStreet2("t1rt");
-			employee.setCity("1");
-			employee.setState("ug1");
-			employee.setCountry("lv1");
-			employee.setEducationalAttainment("sa1df");
-			employee.setRecognitions("sad1f");
+			employee.setAge(Integer.parseInt(""+Math.round(Math.random()*1000)));
+			employee.setGender('m');
+			employee.setCivilStatus(""+Math.round(Math.random()*1000));
+			employee.setCitizenship(""+Math.round(Math.random()*1000));
+			employee.setSssNo(""+Math.round(Math.random()*1000));
+			employee.setTinNo(""+Math.round(Math.random()*1000));
+			employee.setMobilePhoneNo(""+Math.round(Math.random()*1000));
+			employee.setHomePhoneNo(""+Math.round(Math.random()*1000));
+			employee.setStreet1(""+Math.round(Math.random()*1000));
+			employee.setStreet2(""+Math.round(Math.random()*1000));
+			employee.setCity(""+Math.round(Math.random()*1000));
+			employee.setState(""+Math.round(Math.random()*1000));
+			employee.setCountry(""+Math.round(Math.random()*1000));
+			employee.setEducationalAttainment(""+Math.round(Math.random()*1000));
+			employee.setRecognitions(""+Math.round(Math.random()*1000));
+			ex.create(conn, employee);
+		
+			
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return employee;
+	}
+
+	public void myConnect() throws ClassNotFoundException, SQLException {
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+
+		conn = DriverManager.getConnection(url, "sampleuser", "samplepassword");
+		
+	}
+
+	public void XZ() {
+		try {
+
+			// System.out.print(">>>>>>>>>>>>"+ex.findByPK("123"));
 			// System.out.print(">>>>>>><>>>>>>>>>" + ex.findByAll() + "\n");
-ex.remove(conn,"789" );
-			//ex.create(conn, employee);
+
+			// ex.remove(conn, "789");
+
+			// ex.create(conn, employee);
+			// conn.setAutoCommit(false);
+			
+			stmt.close();
+			// System.out.println ("Ok.");
 
 		} catch (Exception e) {
 			System.out.println("ypypy");
 			e.printStackTrace();
 			// TODO: handle exception
 		}
-
-		// conn.setAutoCommit(false);
-		Statement stmt = conn.createStatement();
-		ResultSet rset = stmt
-				.executeQuery("SELECT firstname,lastname,age FROM employee");
-
-		while (rset.next()) {
-			System.out.println(rset.getString("firstname"));
-			System.out.println(rset.getString(2));
-			System.out.println(rset.getString(3));
-
-		}
-		stmt.close();
-		// System.out.println ("Ok.");
 	}
+
 }
