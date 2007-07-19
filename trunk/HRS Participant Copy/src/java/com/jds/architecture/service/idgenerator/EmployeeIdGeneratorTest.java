@@ -29,7 +29,7 @@ public class EmployeeIdGeneratorTest extends TestCase {
 	 * Test method for {@link com.jds.architecture.service.idgenerator.EmployeeIdGenerator#getInstance()}.
 	 */
 	public void testGetInstance() {
-		
+		assertSame(EmployeeIdGenerator.getInstance(), EmployeeIdGenerator.getInstance());
 	}
 
 	/**
@@ -37,9 +37,7 @@ public class EmployeeIdGeneratorTest extends TestCase {
 	 * @throws IdGeneratorException 
 	 */
 	public void testGetNextId() throws IdGeneratorException {
-		System.out.println(EmployeeIdGenerator.getInstance().getNextId());
 		assertNotNull(EmployeeIdGenerator.getInstance().getNextId());
-		
 	}
 
 }
