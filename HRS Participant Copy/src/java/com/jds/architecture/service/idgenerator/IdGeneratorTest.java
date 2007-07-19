@@ -9,7 +9,7 @@ import junit.framework.TestCase;
  * @author training
  *
  */
-public class EmployeeIdGeneratorTest extends TestCase {
+public class IdGeneratorTest extends TestCase {
 
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
@@ -30,6 +30,9 @@ public class EmployeeIdGeneratorTest extends TestCase {
 	 */
 	public void testGetInstance() {
 		assertSame(EmployeeIdGenerator.getInstance(), EmployeeIdGenerator.getInstance());
+		assertSame(CategoryIdGenerator.getInstance(), CategoryIdGenerator.getInstance());
+		assertSame(SkillIdGenerator.getInstance(), SkillIdGenerator.getInstance());
+		assertSame(ProjectIdGenerator.getInstance(), ProjectIdGenerator.getInstance());
 	}
 
 	/**
@@ -38,6 +41,9 @@ public class EmployeeIdGeneratorTest extends TestCase {
 	 */
 	public void testGetNextId() throws IdGeneratorException {
 		assertNotNull(EmployeeIdGenerator.getInstance().getNextId());
+		assertNotNull(CategoryIdGenerator.getInstance().getNextId());
+		assertNotNull(SkillIdGenerator.getInstance().getNextId());
+		assertNotNull(ProjectIdGenerator.getInstance().getNextId());
 	}
 
 }

@@ -24,7 +24,7 @@ import com.jds.architecture.service.transaction.TransactionException;
 public class CategoryIdGenerator implements IdGeneratorInterface {
 
 	private static CategoryIdGenerator idGen = null;
-	private String genID = "select seq_category.nextval from dual";
+	private String genID = "select seq_skillcategory.nextval from dual";
 	private Statement stmt = null;
 	private Connection conn = null;
 	private ResultSet rs = null;
