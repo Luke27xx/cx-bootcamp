@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.sql.RowSet;
 import javax.sql.rowset.CachedRowSet;
 
@@ -163,10 +161,47 @@ public class EmployeeDAO implements DataAccessObjectInterface {
 	 * @return RowSet - rowset of found records
 	 */
 	public RowSet find(Object object) throws DAOException {
+		  EmployeeInfo eInf = (EmployeeInfo)object;
+		  String query = DAOConstants.EMPACC_FIND_MAIN;
+		  String criteria = "firstname like \"%"+eInf.getFirstName()+"%\" AND lastname like \"%"+eInf.getLastName()+"%\""; 
+		  query = query.replaceAll("@", criteria);
+		  ResultSet rs;
+		  CachedRowSet result = null;
+		  Connection conn = null;
 
-        return null;
-	}
+		  try{
+		  log.debug("finding all EmployeeInfo entries");
+		  conn = dbAccess.getConnection();
+		  result = new CachedRowSetImpl();
 
+		  PreparedStatement stmnt = conn.prepareStatement(query);
+		  rs = stmnt.executeQuery();
+
+		  result.populate(rs);
+		  rs.close();
+		  stmnt.close();
+		  }
+
+		  catch (DBAccessException e){
+		  throw new DAOException (e.getMessageKey(),
+		  e, DAOException.ERROR, true);
+		  } 
+		  catch (SQLException e) {
+		  throw new DAOException ("sql.findpk.exception.empdao",
+		  e, DAOException.ERROR, true);
+		  }
+
+		  finally{
+		  try {
+		  dbAccess.closeConnection(conn);
+		  } catch (DBAccessException e1) {
+
+		  }
+		  }
+
+
+		  return result;
+		  }
 
 
 	/**
@@ -206,12 +241,12 @@ public class EmployeeDAO implements DataAccessObjectInterface {
 				}
 				
 				rs.close();
-				log.debug("found by pk EmployeeInfo entry");//zamenitj
+				log.debug("found by All EmployeeInfo entry");
 			} catch (DBAccessException e){
 				throw new DAOException (e.getMessageKey(),
 					e, DAOException.ERROR, true);				
 			} catch (SQLException e) {
-				throw new DAOException ("sql.findpk.exception.empdao",
+				throw new DAOException ("sql.findall.exception.empdao",
 				e, DAOException.ERROR, true);
 			} finally {
 				try {
