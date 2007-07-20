@@ -67,7 +67,7 @@ public class EmployeeAssembler {
 		employeeReturn.setFirstName(rs.getString("firstname"));
 		employeeReturn.setLastName(rs.getString("lastname"));
 		employeeReturn.setMiddleName(rs.getString("middlename"));
-		employeeReturn.setDob(new java.util.Date(((java.sql.Timestamp)rs.getObject("dateofbirth")).getTime()));
+	//	employeeReturn.setDob(new java.util.Date(((java.sql.Timestamp)rs.getObject("dateofbirth")).getTime()));
 		employeeReturn.setAge(rs.getInt("age"));		
 		employeeReturn.setGender(rs.getString("gender").toCharArray()[0]);
 		employeeReturn.setCivilStatus(rs.getString("civilstatus"));
