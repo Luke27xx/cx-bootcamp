@@ -1,13 +1,10 @@
 package test.com.jds.architecture.service.dao;
 
-import java.sql.SQLException;
+
 
 import javax.sql.rowset.CachedRowSet;
-
 import org.junit.Test;
 
-import com.jds.architecture.utilities.CalendarConstants;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import junit.framework.TestCase;
 
