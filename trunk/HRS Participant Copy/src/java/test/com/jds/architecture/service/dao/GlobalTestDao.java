@@ -1,5 +1,7 @@
 package test.com.jds.architecture.service.dao;
 
+import javax.sql.rowset.CachedRowSet;
+
 import com.jds.architecture.utilities.CalendarConstants;
 
 import junit.framework.TestCase;
@@ -23,11 +25,17 @@ public class GlobalTestDao extends TestCase {
 	}
 
 	public void testToStandardMonthNormal()throws Exception {
-		//System.out.print(test.findByAll().getMaxRows()+"<<<kol-vo~!!!!!!!!!");
+	
+//TEST CREATE!-----------------------------------
+		CachedRowSet help=null;
 		test.myCreate();
-		System.out.print(test.findByAll().getMaxRows()+"<<<kol-vo~!!!!!!!!!");
-		assertEquals(test.findByAll().getMaxRows(),test.findByAll().getMaxRows());	
-
+		help=(CachedRowSet)test.findByAll();
+		System.out.print(help.size()+"<<<kol-vo~!!!!!!!!!");
+		assertEquals(129,help.size());	
+//---------------------------------------------------------
+		
+		
+		
 	}
 
 	public void testToStandardMonthError() {
