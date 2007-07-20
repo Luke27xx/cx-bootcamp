@@ -75,7 +75,7 @@ public class GlobalTestDao extends TestCase {
 			xz[4] = 2;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+		//	e.printStackTrace();
 		}
 	}
 }
