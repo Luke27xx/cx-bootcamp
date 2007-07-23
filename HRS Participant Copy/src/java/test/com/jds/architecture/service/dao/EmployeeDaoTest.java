@@ -70,8 +70,7 @@ public class EmployeeDaoTest extends EmployeeDAO {
 		myConnect();
 
 		try {
-			EmployeeDaoTest ex = new EmployeeDaoTest();
-			// EmployeeInfo employee = new EmployeeInfo();
+
 			Date dates = new Date();
 
 			// employee.setEmpNo(""+Math.round(Math.random()*1000));
@@ -97,8 +96,8 @@ public class EmployeeDaoTest extends EmployeeDAO {
 			employee.setEducationalAttainment(""
 					+ Math.round(Math.random() * 1000));
 			employee.setRecognitions("" + Math.round(Math.random() * 1000));
-			
-			ex.create(conn, employee);
+
+			create(conn, employee);
 
 			// conn.close();
 		} catch (Exception e) {
@@ -116,40 +115,33 @@ public class EmployeeDaoTest extends EmployeeDAO {
 
 	public void myRemove() {
 		try {
-			EmployeeDaoTest ex = new EmployeeDaoTest();
-			ex.remove(conn, "1314701132");
+
+			remove(conn, "1314701132");
 		} catch (Exception e) {
 			e.printStackTrace();
-		
+
 		}
 	}
 
 	public Object myFindByPK(Object object) throws DAOException {
-		EmployeeDaoTest ex = null;
-		try {
-			ex = new EmployeeDaoTest();
-		} catch (Exception e) {
-		
-		}
 
-		return ex.findByPK(object);
+		return findByPK(object);
 
 	}
 
-	public void myUpdate() throws DAOException,DBAccessException {
+	public void myUpdate() throws DAOException, DBAccessException {
 		EmployeeInfo employee = new EmployeeInfo();
-		EmployeeDaoTest ex = new EmployeeDaoTest();
-		
+
 		Date dates = new Date();
 
 		// employee.setEmpNo(""+Math.round(Math.random()*1000));
-	//	employee.setEmpNo("1314701132");
+		// employee.setEmpNo("1314701132");
 		employee.setFirstName("ZZZ");
 		employee.setLastName("XXX");
 		employee.setMiddleName("" + Math.round(Math.random() * 1000));
 		employee.setDob(dates);
-		employee.setAge(Integer.parseInt(""
-				+ Math.round(Math.random() * 1000)));
+		employee
+				.setAge(Integer.parseInt("" + Math.round(Math.random() * 1000)));
 		employee.setGender('m');
 		employee.setCivilStatus("" + Math.round(Math.random() * 1000));
 		employee.setCitizenship("" + Math.round(Math.random() * 1000));
@@ -162,20 +154,14 @@ public class EmployeeDaoTest extends EmployeeDAO {
 		employee.setCity("" + Math.round(Math.random() * 1000));
 		employee.setState("" + Math.round(Math.random() * 1000));
 		employee.setCountry("" + Math.round(Math.random() * 1000));
-		employee.setEducationalAttainment(""
-				+ Math.round(Math.random() * 1000));
+		employee
+				.setEducationalAttainment("" + Math.round(Math.random() * 1000));
 		employee.setRecognitions("" + Math.round(Math.random() * 1000));
-			
-		EmployeeDaoTest exz = null;
-		try {
-			exz = new EmployeeDaoTest();
-		} catch (Exception e) {
-		
-		}
-		System.out.println("DO>"+findByPK("1314701132"));
-		exz.update(conn, employee, findByPK("1314701132"));
-		System.out.println("posle>"+findByPK("1314701132"));
-		
+
+		System.out.println("DO>" + findByPK("1314701132"));
+		update(conn, employee, findByPK("1314701132"));
+		System.out.println("posle>" + findByPK("1314701132"));
+
 	}
 
 	// public myFindByPK(){}
@@ -185,5 +171,21 @@ public class EmployeeDaoTest extends EmployeeDAO {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+
+	public void errorTestCreate() throws Exception {
+		try {
+			create(conn, null);
+			} catch (Exception e) {
+
+		}
+			
+			try {
+				EmployeeInfo empl = new EmployeeInfo();
+				create(conn, empl);
+				} catch (Exception e) {
+
+			}
+
 	}
 }

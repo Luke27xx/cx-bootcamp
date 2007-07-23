@@ -252,7 +252,8 @@ public class EmployeeBC {
 		Collection<EmployeeInfo> data2 = (Collection<EmployeeInfo>) data;
 		return data2;
 	}
-public void updateEmployee (EmployeeInfo info){
-	
-}
+
+	public void updateEmployee(EmployeeInfo info) {
+
+	}
 }
