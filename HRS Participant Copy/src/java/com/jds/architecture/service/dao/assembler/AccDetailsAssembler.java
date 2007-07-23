@@ -10,8 +10,6 @@ import java.sql.SQLException;
 import javax.sql.RowSet;
 
 import com.jds.apps.beans.AccentureDetails;
-import com.jds.apps.beans.AccentureDetails;
-import com.jds.apps.beans.EmployeeInfo;
 import com.jds.architecture.service.dao.DAOConstants;
 
 /**
