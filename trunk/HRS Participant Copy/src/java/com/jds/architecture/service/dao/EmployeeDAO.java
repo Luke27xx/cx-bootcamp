@@ -193,7 +193,7 @@ public class EmployeeDAO implements DataAccessObjectInterface {
 	 */
 	public RowSet find(Object object) throws DAOException {
 		EmployeeInfo eInf = (EmployeeInfo) object;
-		String query = DAOConstants.EMPACC_FIND_MAIN;
+		String query = DAOConstants.EMPSQL_FIND_MAIN;
 		String criteria = "firstname like \"%" + eInf.getFirstName()
 				+ "%\" AND lastname like \"%" + eInf.getLastName() + "%\"";
 		query = query.replaceAll("@", criteria);
