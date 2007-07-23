@@ -86,11 +86,11 @@ public class StatementGenProject extends StatementGenerator {
 			
 		} 
 		
-		/*if(obj.getClient() != null) {
+		if(obj.getClient() != null) {
 			strBuffer.append(getColumnValue(isSet, DAOConstants.COL_CLIENTNAME, 
 					obj.getClient(), strConstant));				
 			
-		} */
+		}
 		
 		if ( strBuffer.toString().length() > 0) {
 			if (stmtType == DAOConstants.STMT_TYPE_SET) { 
