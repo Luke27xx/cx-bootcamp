@@ -40,294 +40,301 @@ import com.sun.rowset.CachedRowSetImpl;
  */
 public class ProjectDAO implements DataAccessObjectInterface {
 
- private DBAccess dbAccess = null;
- private static Logger log = (Logger) ServiceFactory.getInstance()
-   .getService(LoggerService.class);
+	private DBAccess dbAccess = null;
+	private static Logger log = (Logger) ServiceFactory.getInstance()
+			.getService(LoggerService.class);
 
- StatementGenerator stmtGen = null;
+	StatementGenerator stmtGen = null;
 
- /**
-  * Constructor initializes variables
-  * 
-  * @throws DAOException
-  * @throws DBAccessException
-  */
- protected ProjectDAO() throws DAOException, DBAccessException {
-  log.info("initializing ProjectDAO");
-  dbAccess = DBAccess.getDBAccess();
-  stmtGen = StatementGeneratorFactory.getGenerator().getStmtGenerator(
-    DAOConstants.GEN_PROJ);
+	/**
+	 * Constructor initializes variables
+	 * 
+	 * @throws DAOException
+	 * @throws DBAccessException
+	 */
+	protected ProjectDAO() throws DAOException, DBAccessException {
+		log.info("initializing ProjectDAO");
+		dbAccess = DBAccess.getDBAccess();
+		stmtGen = StatementGeneratorFactory.getGenerator().getStmtGenerator(
+				DAOConstants.GEN_PROJ);
 
- }
+	}
 
- /**
-  * Creates or insert new record to the table
-  * 
-  * @param Connection -
-  *            database connection
-  * @param Object -
-  *            must be an instance of ProjectInfo,contains object for insert
-  */
- public void create(Connection conn, Object object) throws DAOException {
+	/**
+	 * Creates or insert new record to the table
+	 * 
+	 * @param Connection -
+	 *            database connection
+	 * @param Object -
+	 *            must be an instance of ProjectInfo,contains object for insert
+	 */
+	public void create(Connection conn, Object object) throws DAOException {
 
-  if (!(object instanceof ProjectInfo))
-   throw new DAOException("invalid.object.empdao", null,
-     DAOException.ERROR, true);
+		if (!(object instanceof ProjectInfo))
+			throw new DAOException("invalid.object.empdao", null,
+					DAOException.ERROR, true);
 
-  String sqlstmt = DAOConstants.PROJ_CREATE;
-  ProjectInfo project = (ProjectInfo) object;
+		String sqlstmt = DAOConstants.PROJ_CREATE;
+		ProjectInfo project = (ProjectInfo) object;
 
-  if (project.getProjectId() == null)
-   throw new DAOException("invalid.object.empdao", null,
-     DAOException.ERROR, true);
+		if (project.getProjectId() == null)
+			throw new DAOException("invalid.object.empdao", null,
+					DAOException.ERROR, true);
 
-  log.debug("creating ProjectInfo entry");
-  try {
-   PreparedStatement stmt = conn.prepareStatement(sqlstmt);
-   ProjectAssembler.getPreparedStatement(project, stmt);
-   stmt.executeUpdate();
+		log.debug("creating ProjectInfo entry");
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sqlstmt);
+			ProjectAssembler.getPreparedStatement(project, stmt);
+			stmt.executeUpdate();
 
-   log.debug("created ProjectInfo entry");
-  } catch (SQLException e) {
-   throw new DAOException("sql.create.exception.empdao", e,
-     DAOException.ERROR, true);
-  } catch (Exception e) {
-   throw new DAOException("create.exception.empdao", e.getCause(),
-     DAOException.ERROR, true);
+			log.debug("created ProjectInfo entry");
+		} catch (SQLException e) {
+			throw new DAOException("sql.create.exception.empdao", e,
+					DAOException.ERROR, true);
+		} catch (Exception e) {
+			throw new DAOException("create.exception.empdao", e.getCause(),
+					DAOException.ERROR, true);
 
-  }
- }
+		}
+	}
 
- /**
-  * Removes a record from the table
-  * 
-  * @param Connection -
-  *            database connection
-  * @param Object -
-  *            must be an instance of String , primary key of the object
-  */
- public boolean remove(Connection conn, Object object) throws DAOException {
-  // ProjectInfo eInf;
-  String query = DAOConstants.PROJ_DELETE;
-  //
-  PreparedStatement stmnt = null;
-  if ((object == null) || (!(object instanceof String))) {
+	/**
+	 * Removes a record from the table
+	 * 
+	 * @param Connection -
+	 *            database connection
+	 * @param Object -
+	 *            must be an instance of String , primary key of the object
+	 */
+	public boolean remove(Connection conn, Object object) throws DAOException {
+		// ProjectInfo eInf;
+		String query = DAOConstants.PROJ_DELETE;
+		//
+		PreparedStatement stmnt = null;
+		if ((object == null) || (!(object instanceof String))) {
 
-  }
+		}
 
-  try {
-   // eInf = (ProjectInfo)object;
-   stmnt = conn.prepareStatement(query);
-   stmnt.setString(1, (String) object);
-   stmnt.executeUpdate();
-  } catch (Exception e) {
-   e.printStackTrace();
-  } finally {
-   try {
-    stmnt.close();
-   } catch (Exception e) {
-    e.printStackTrace();
-   }
-  }
+		try {
+			// eInf = (ProjectInfo)object;
+			stmnt = conn.prepareStatement(query);
+			stmnt.setString(1, (String) object);
+			stmnt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmnt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
-  return true;
- }
+		return true;
+	}
 
- /**
-  * Finds a record from the table
-  * 
-  * @return Object - String
-  * @param Object -
-  *            String instance, primary key of the record
-  */
- public Object findByPK(Object object) throws DAOException {
-  String sqlStmt = DAOConstants.PROJ_FIND_BYPK;
-  ProjectInfo projectReturn = null;
+	/**
+	 * Finds a record from the table
+	 * 
+	 * @return Object - String
+	 * @param Object -
+	 *            String instance, primary key of the record
+	 */
+	public Object findByPK(Object object) throws DAOException {
+		String sqlStmt = DAOConstants.PROJ_FIND_BYPK;
+		ProjectInfo projectReturn = null;
 
-  if (!(object instanceof String))
-   throw new DAOException("invalid.object.projdao", null,
-     DAOException.ERROR, true);
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //!!!!!!!!!!!!!!!!!!!!!!!!!TUT POFIXITJ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  sqlStmt = "SELECT * FROM project WHERE empno = " + object;
-  // String pk = (String) object;
-  //!!!!!!!!!!!!!!!!!!!!!!!!!i pomenatj na select iz proj!!!!!!!!!!!!!!!!!!!
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  Connection conn = null;
+		if (!(object instanceof String))
+			throw new DAOException("invalid.object.projdao", null,
+					DAOException.ERROR, true);
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// !!!!!!!!!!!!!!!!!!!!!!!!!TUT
+		// POFIXITJ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		sqlStmt = "SELECT * FROM project WHERE empno = " + object;
+		// String pk = (String) object;
+		// !!!!!!!!!!!!!!!!!!!!!!!!!i pomenatj na select iz
+		// proj!!!!!!!!!!!!!!!!!!!
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		Connection conn = null;
 
-  try {
-   log.debug("finding pk ProjectInfo entry");
-   conn = dbAccess.getConnection();
+		try {
+			log.debug("finding pk ProjectInfo entry");
+			conn = dbAccess.getConnection();
 
-   PreparedStatement stmt = conn.prepareStatement(sqlStmt);
-   // stmt.setString(1, pk);
-   ResultSet rs = stmt.executeQuery();
+			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+			// stmt.setString(1, pk);
+			ResultSet rs = stmt.executeQuery();
 
-   if (rs.next()) {
-    // System.out.print("RS<>" + rs.getString(2));
-    projectReturn = ProjectAssembler.getInfo(rs);
-   }
+			if (rs.next()) {
+				// System.out.print("RS<>" + rs.getString(2));
+				projectReturn = ProjectAssembler.getInfo(rs);
+			}
 
-   rs.close();
-   log.debug("found by pk ProjectInfo entry");
-  } catch (DBAccessException e) {
-   throw new DAOException(e.getMessageKey(), e, DAOException.ERROR,
-     true);
-  } catch (SQLException e) {
-   throw new DAOException("sql.findpk.exception.projdao", e,
-     DAOException.ERROR, true);
-  } finally {
-   try {
-    dbAccess.closeConnection(conn);
-   } catch (DBAccessException e1) {
+			rs.close();
+			log.debug("found by pk ProjectInfo entry");
+		} catch (DBAccessException e) {
+			throw new DAOException(e.getMessageKey(), e, DAOException.ERROR,
+					true);
+		} catch (SQLException e) {
+			throw new DAOException("sql.findpk.exception.projdao", e,
+					DAOException.ERROR, true);
+		} finally {
+			try {
+				dbAccess.closeConnection(conn);
+			} catch (DBAccessException e1) {
 
-   }
-  }
+			}
+		}
 
-  return projectReturn;
+		return projectReturn;
 
- }
+	}
 
- /**
-  * Finds all records that matches the criteria
-  * 
-  * @param Object -
-  *            instance of ProjectInfo used as search criteria
-  * @return RowSet - rowset of found records
-  */
- public RowSet find(Object object) throws DAOException {
-  ProjectInfo eInf = (ProjectInfo) object;
-  String query = DAOConstants.PROJ_FIND_MAIN;
-  /*
-   * NADO SMORETJ CHTO TAM ETOT METOD DELAET I KAKIJE ONI VOOBSHE ESTJ :))
-   * 
-   */
-  stmtGen.transformStmt(eInf, stmtType)
-  String criteria = "firstname like \"%" + eInf.getFirstName()
-    + "%\" AND lastname like \"%" + eInf.getLastName() + "%\"";
-  query = query.replaceAll("@", criteria);
-  ResultSet rs;
-  CachedRowSet result = null;
-  Connection conn = null;
+	/**
+	 * Finds all records that matches the criteria
+	 * 
+	 * @param Object -
+	 *            instance of ProjectInfo used as search criteria
+	 * @return RowSet - rowset of found records
+	 */
+	public RowSet find(Object object) throws DAOException {
+		ProjectInfo eInf = (ProjectInfo) object;
+		String query = DAOConstants.PROJ_FIND_MAIN;
+		String criteria = "";
+		StatementGenProject stmtGen = new StatementGenProject();
+		
+		try {
+			criteria = stmtGen
+					.transformStmt(eInf, DAOConstants.STMT_TYPE_WHERE);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
 
-  try {
-   log.debug("finding all ProjectInfo entries");
-   conn = dbAccess.getConnection();
-   result = new CachedRowSetImpl();
+		}
 
-   PreparedStatement stmnt = conn.prepareStatement(query);
-   rs = stmnt.executeQuery();
+		query = query.replaceAll("@", criteria);
+		ResultSet rs;
+		CachedRowSet result = null;
+		Connection conn = null;
 
-   result.populate(rs);
-   rs.close();
-   stmnt.close();
-  }
+		try {
+			log.debug("finding all ProjectInfo entries");
+			conn = dbAccess.getConnection();
+			result = new CachedRowSetImpl();
 
-  catch (DBAccessException e) {
-   throw new DAOException(e.getMessageKey(), e, DAOException.ERROR,
-     true);
-  } catch (SQLException e) {
-   throw new DAOException("sql.findpk.exception.empdao", e,
-     DAOException.ERROR, true);
-  }
+			PreparedStatement stmnt = conn.prepareStatement(query);
+			rs = stmnt.executeQuery();
 
-  finally {
-   try {
-    dbAccess.closeConnection(conn);
-   } catch (DBAccessException e1) {
+			result.populate(rs);
+			rs.close();
+			stmnt.close();
+		}
 
-   }
-  }
+		catch (DBAccessException e) {
+			throw new DAOException(e.getMessageKey(), e, DAOException.ERROR,
+					true);
+		} catch (SQLException e) {
+			throw new DAOException("sql.findpk.exception.empdao", e,
+					DAOException.ERROR, true);
+		}
 
-  return result;
- }
+		finally {
+			try {
+				dbAccess.closeConnection(conn);
+			} catch (DBAccessException e1) {
 
- /**
-  * @param Connectin -
-  *            database connection
-  * @param ObjectSet -
-  *            instance of ProjectInfo, set the new values of a particular
-  *            record
-  * @param objWher-
-  *            instance of ProjectInfo, used as update criteria
-  * @return boolean - true if record is updated
-  */
- public boolean update(Connection conn, Object objSet, Object objWhere)
-   throws DAOException {
+			}
+		}
 
-  if ((!(objSet instanceof ProjectInfo))
-    || (!(objWhere instanceof ProjectInfo)))
-   throw new DAOException("invalid.object.empdao", null,
-     DAOException.ERROR, true);
+		return result;
+	}
 
-  ProjectInfo projectSet = (ProjectInfo) objSet;
-  ProjectInfo projectWhere = (ProjectInfo) objWhere;
+	/**
+	 * @param Connectin -
+	 *            database connection
+	 * @param ObjectSet -
+	 *            instance of ProjectInfo, set the new values of a particular
+	 *            record
+	 * @param objWher-
+	 *            instance of ProjectInfo, used as update criteria
+	 * @return boolean - true if record is updated
+	 */
+	public boolean update(Connection conn, Object objSet, Object objWhere)
+			throws DAOException {
 
-  String sqlstmt = DAOConstants.EMPSQL_UPDATE;
+		if ((!(objSet instanceof ProjectInfo))
+				|| (!(objWhere instanceof ProjectInfo)))
+			throw new DAOException("invalid.object.empdao", null,
+					DAOException.ERROR, true);
 
-  try {
-   StatementGenerator gen = new StatementGenProject();
+		ProjectInfo projectSet = (ProjectInfo) objSet;
+		ProjectInfo projectWhere = (ProjectInfo) objWhere;
 
-   String set = gen.transformStmt(projectSet,
-     DAOConstants.STMT_TYPE_SET);
-   String where = gen.transformStmt(projectWhere,
-     DAOConstants.STMT_TYPE_WHERE);
+		String sqlstmt = DAOConstants.EMPSQL_UPDATE;
 
-   sqlstmt = sqlstmt.replaceFirst("@", set).replaceFirst("@", where);
+		try {
+			StatementGenerator gen = new StatementGenProject();
 
-   PreparedStatement st = conn.prepareStatement(sqlstmt);
-   st.executeQuery();
+			String set = gen.transformStmt(projectSet,
+					DAOConstants.STMT_TYPE_SET);
+			String where = gen.transformStmt(projectWhere,
+					DAOConstants.STMT_TYPE_WHERE);
 
-  } catch (SQLException e) {
-   throw new DAOException("sql.create.exception.empdao", e,
-     DAOException.ERROR, true);
+			sqlstmt = sqlstmt.replaceFirst("@", set).replaceFirst("@", where);
 
-  } catch (Exception e) {
-   throw new DAOException("create.exception.empdao", e.getCause(),
-     DAOException.ERROR, true);
-  }
+			PreparedStatement st = conn.prepareStatement(sqlstmt);
+			st.executeQuery();
 
-  return true;
+		} catch (SQLException e) {
+			throw new DAOException("sql.create.exception.empdao", e,
+					DAOException.ERROR, true);
 
- }
+		} catch (Exception e) {
+			throw new DAOException("create.exception.empdao", e.getCause(),
+					DAOException.ERROR, true);
+		}
 
- public RowSet findByAll() throws DAOException {
-  String sqlStmt = DAOConstants.EMPSQL_FIND_ALL;
-  ProjectInfo projectReturn = null;
-  RowSet rowS = null;
-  CachedRowSet crset = null;
-  Connection conn = null;
+		return true;
 
-  try {
-   log.debug("finding all ProjectInfo entries");
-   conn = dbAccess.getConnection();
-   PreparedStatement stmt = conn.prepareStatement(sqlStmt);
-   ResultSet rs = stmt.executeQuery();
-   crset = new CachedRowSetImpl();
-   crset.populate(rs);
-   rs.close();
-   stmt.close();
-   log.debug("found All Project entries");
-  } catch (DBAccessException e) {
-   e.printStackTrace();
-   throw new DAOException(e.getMessageKey(), e, DAOException.ERROR,
-     true);
+	}
 
-  } catch (SQLException e) {
-   throw new DAOException("sql.findpk.exception.empdao", e,
-     DAOException.ERROR, true);
-  } finally {
-   try {
+	public RowSet findByAll() throws DAOException {
+		String sqlStmt = DAOConstants.EMPSQL_FIND_ALL;
+		ProjectInfo projectReturn = null;
+		RowSet rowS = null;
+		CachedRowSet crset = null;
+		Connection conn = null;
 
-    dbAccess.closeConnection(conn);
+		try {
+			log.debug("finding all ProjectInfo entries");
+			conn = dbAccess.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+			ResultSet rs = stmt.executeQuery();
+			crset = new CachedRowSetImpl();
+			crset.populate(rs);
+			rs.close();
+			stmt.close();
+			log.debug("found All Project entries");
+		} catch (DBAccessException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessageKey(), e, DAOException.ERROR,
+					true);
 
-   } catch (DBAccessException e1) {
+		} catch (SQLException e) {
+			throw new DAOException("sql.findpk.exception.empdao", e,
+					DAOException.ERROR, true);
+		} finally {
+			try {
 
-   }
-  }
+				dbAccess.closeConnection(conn);
 
-  return crset;
+			} catch (DBAccessException e1) {
 
- }
+			}
+		}
+
+		return crset;
+
+	}
 
 }
