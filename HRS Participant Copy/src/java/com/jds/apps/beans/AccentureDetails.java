@@ -1,7 +1,7 @@
 /*
- * Created on Nov 22, 2004
+ * Created on Jul 23, 2007
  *
- * r.c.delos.santos
+ * M.Skovitovs
  * 
  */
 package com.jds.apps.beans;
@@ -11,7 +11,7 @@ package com.jds.apps.beans;
 import java.util.Date;
 
 /**
- * @author r.c.delos.santos
+ * @author M.Skovitovs
  * 
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
