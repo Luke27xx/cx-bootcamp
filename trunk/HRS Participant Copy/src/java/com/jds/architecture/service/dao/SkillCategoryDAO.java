@@ -257,7 +257,7 @@ public class SkillCategoryDAO implements DataAccessObjectInterface {
   String sqlstmt = DAOConstants.SKILLCAT_UPDATE_MAIN;
 
   try {
-   StatementGenerator gen = new StatementGenCategory();
+   StatementGenerator gen = new StatementGenCategory ();
 
    String set = gen.transformStmt(skillCategorySet,
      DAOConstants.STMT_TYPE_SET);
