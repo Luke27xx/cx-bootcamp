@@ -87,13 +87,14 @@ public class ProjectDAO implements DataAccessObjectInterface {
 			ProjectAssembler.getPreparedStatement(project, stmt);
 			
 			stmt.executeUpdate();
+			
 			stmt.close();
 			log.debug("created ProjectInfo entry");
 		} catch (SQLException e) {
-			throw new DAOException("sql.create.exception.empdao", e,
+			throw new DAOException("sql.create.exception.projdao", e,
 					DAOException.ERROR, true);
 		} catch (Exception e) {
-			throw new DAOException("create.exception.empdao", e.getCause(),
+			throw new DAOException("create.exception.projdao", e.getCause(),
 					DAOException.ERROR, true);
 
 		}
@@ -108,17 +109,21 @@ public class ProjectDAO implements DataAccessObjectInterface {
 	 *            must be an instance of String , primary key of the object
 	 */
 	public boolean remove(Connection conn, Object object) throws DAOException {
-		// ProjectInfo eInf;
+		
+		String arg = (String) object;
 		String query = DAOConstants.PROJ_DELETE;
 		PreparedStatement stmnt = null;
 		if ((object == null) || (!(object instanceof String))) {
-
+			if (arg.matches("^0-9")){
+				throw new DAOException("invalid.object.empdao", null,
+						DAOException.ERROR, true);
+			}
 		}
 
 		try {
 			// eInf = (ProjectInfo)object;
 			stmnt = conn.prepareStatement(query);
-			stmnt.setString(1, (String) object);
+			stmnt.setString(1, arg);
 			stmnt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,19 +147,18 @@ public class ProjectDAO implements DataAccessObjectInterface {
 	 */
 	public Object findByPK(Object object) throws DAOException {
 		String sqlStmt = DAOConstants.PROJ_FIND_BYPK;
+		String arg = (String)object;
 		ProjectInfo projectReturn = null;
 
-		if (!(object instanceof String))
-			throw new DAOException("invalid.object.projdao", null,
-					DAOException.ERROR, true);
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// !!!!!!!!!!!!!!!!!!!!!!!!!TUT
-		// POFIXITJ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if ((object == null) || (!(object instanceof String))) {
+			if (arg.matches("^0-9")){
+				throw new DAOException("invalid.object.empdao", null,
+						DAOException.ERROR, true);
+			}
+		}
+		
 		sqlStmt = "SELECT * FROM project WHERE empno = " + object;
-		// String pk = (String) object;
-		// !!!!!!!!!!!!!!!!!!!!!!!!!i pomenatj na select iz
-		// proj!!!!!!!!!!!!!!!!!!!
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 		Connection conn = null;
 
 		try {
@@ -271,7 +275,7 @@ public class ProjectDAO implements DataAccessObjectInterface {
 		ProjectInfo projectSet = (ProjectInfo) objSet;
 		ProjectInfo projectWhere = (ProjectInfo) objWhere;
 
-		String sqlstmt = DAOConstants.EMPSQL_UPDATE;
+		String sqlstmt = DAOConstants.PROJ_UPDATE_MAIN;
 
 		try {
 			StatementGenerator gen = new StatementGenProject();
