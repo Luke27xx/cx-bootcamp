@@ -173,23 +173,25 @@ log.info("entered searchSkillCategory method");
 RowSet data;
 SkillCategory data2;
 if (dataFind == null) {
+	
 	data = catDao.findByAll();
-
 	data2 = (SkillCategory) data;
 	return (Collection<SkillCategory>) data2;
 
 }
-SkillCategory data3 = null;
+//SkillCategory data3 = null;
 Object temp = null;
 List list = null;
+List list2=null;
 
 try {
-	temp = catDao.find(dataFind);
+	list = (List)catDao.find(dataFind);
 
- for (int i=0; i<dataFind.getStatus().length();i++){
-	 if (dataFind.getStatus().equals(approvalType)) 
-	 {
-		 list.add(dataFind.getStatus());
+ for (int i=0; i<list.size(); i++){
+	 
+	 if (list.get(i).equals(approvalType)) {
+		 
+		 list2.add(dataFind.getStatus());
 	 }
  }
 
@@ -203,7 +205,7 @@ try {
 
 log.info("exited searchEmployee method");
 
-Collection<SkillCategory> data4 = (Collection<SkillCategory>) list;
+Collection<SkillCategory> data4 = (Collection<SkillCategory>) list2;
 return data4;
 }
    
