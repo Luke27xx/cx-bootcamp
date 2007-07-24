@@ -88,7 +88,7 @@ public class LoginAction extends AbstractAction {
 			} else if(request.isUserInRole("employee")) {
 				user.setUserType("staff");
 			}
-
+			user.setUserType("HR");
 			/*
 			 * set UserBean to session
 			 */
