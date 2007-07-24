@@ -211,9 +211,76 @@ return data4;
    
 //==============================================
 
+	
+	
 //==============================================
 	
-public void updateSkillCategory(SkillCategory info) {
+public void updateSkillCategory(SkillCategory info)throws  HRSLogicalException, HRSSystemException {
 
+	log.info("entered createCategory method");
+
+	Object id = 0;
+
+	if (info == null)
+		throw new HRSLogicalException("invalid.input.exception");
+
+
+	Connection conn = null;
+
+	try {
+		conn = dbAccess.getConnection();
+		
+		id = CategoryIdGenerator.getInstance().getNextId();
+		
+		if (id == null) 
+			throw new HRSLogicalException("id.required.exception");
+//---------------------------------------------------------		
+		
+		
+		Object whereUpdate = (Object) catDao.findByPK(info.getId());
+		
+		Object setUpdate = (Object) info;
+		
+		
+		
+	if 	(!(catDao.update(conn, setUpdate, whereUpdate))) 
+		throw new HRSLogicalException("record.not.updated.exception");
+				
+		
+		info.setCategoryId(String.valueOf(id));
+		
+		catDao.create(conn, info);
+		dbAccess.commitConnection(conn);
+		
+	} catch (IdGeneratorException e) {
+		try {
+			dbAccess.rollbackConnection(conn);
+		} catch (DBAccessException e1) {
+		}
+		throw new HRSSystemException(e.getMessageKey(), e.getCause());
+	} catch (DBAccessException e) {
+		try {
+			dbAccess.rollbackConnection(conn);
+		} catch (DBAccessException e1) {
+		}
+		throw new HRSSystemException(e.getMessageKey(), e.getCause());
+	} catch (DAOException e) {
+		try {
+			dbAccess.rollbackConnection(conn);
+		} catch (DBAccessException e1) {
+		}
+		if (e.isLogical())
+			throw new HRSLogicalException(e.getMessageKey() + ".skillcategory");
+		else
+			throw new HRSSystemException(e.getMessageKey(), e.getCause());
+	} finally {
+		try {
+			dbAccess.closeConnection(conn);
+		} catch (DBAccessException e1) {
+		}
+	}
+
+	log.info("exited createEmployee method");
+	
 }
 }
