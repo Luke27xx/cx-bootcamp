@@ -20,12 +20,12 @@ import junit.framework.TestCase;
 public class EmployeeDaoTest extends EmployeeDAO {
 	Connection conn = null;
 	final static String url = "jdbc:oracle:thin:@10.122.131.216:1521:XE";
-	Statement stmt = null;
-	ResultSet rset = null;
+	//Statement stmt = null;
+	//ResultSet rset = null;
 
 	public EmployeeDaoTest() throws DAOException, DBAccessException {
 		super();
-
+   
 	}
 
 	@Override
