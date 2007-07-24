@@ -9,12 +9,14 @@
 package com.jds.businesscomponent.hr;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.sql.RowSet;
 
-import com.jds.apps.Constants;
-//import com.jds.apps.beans.AccentureDetails;
+import com.jds.apps.Constants; // import com.jds.apps.beans.AccentureDetails;
+import com.jds.apps.beans.AbstractReferenceData;
 import com.jds.apps.beans.ProjectInfo;
 import com.jds.architecture.Logger;
 import com.jds.architecture.ServiceFactory;
@@ -26,8 +28,10 @@ import com.jds.architecture.service.dao.DAOException;
 import com.jds.architecture.service.dao.DAOFactory;
 import com.jds.architecture.service.dao.DataAccessObjectInterface;
 import com.jds.architecture.service.dao.ProjectDAO;
+import com.jds.architecture.service.dao.assembler.ProjectAssembler;
 import com.jds.architecture.service.dbaccess.DBAccess;
 import com.jds.architecture.service.dbaccess.DBAccessException;
+import com.jds.architecture.service.idgenerator.CategoryIdGenerator;
 import com.jds.architecture.service.idgenerator.ProjectIdGenerator;
 import com.jds.architecture.service.idgenerator.IdGeneratorException;
 
@@ -42,7 +46,7 @@ public class ProjectBC {
 
 	private Constants cons;
 	private DataAccessObjectInterface projDao = null;
-	//private DataAccessObjectInterface empAccDao = null;
+	// private DataAccessObjectInterface empAccDao = null;
 	private DBAccess dbAccess = null;
 
 	private static Logger log = (Logger) ServiceFactory.getInstance()
@@ -59,7 +63,6 @@ public class ProjectBC {
 			projDao = (ProjectDAO) DAOFactory.getFactory().getDAOInstance(
 					DAOConstants.DAO_PROJ);
 
-			
 			dbAccess = DBAccess.getDBAccess();
 			cons = new Constants();
 
@@ -81,17 +84,21 @@ public class ProjectBC {
 	}
 
 	/**
-	 * Create employee information by HRManager
-	 * Validate the ProjectInfo object passed:
+	 * Create employee information by HRManager Validate the ProjectInfo object
+	 * passed:
+	 * 
 	 * @param info
 	 *            ProjectInfo
-	 * @throws HRSLogicalException with message key “invalid.input.exception”
-	 *             object passed is null
-	 * @throws HRSLogicalException with message key “start.date.required.exception”
-	 *             If its start date is null
-	 * @throws HRSSystemException 
+	 * @throws HRSLogicalException
+	 *             with message key “invalid.input.exception” object passed is
+	 *             null
+	 * @throws HRSLogicalException
+	 *             with message key “start.date.required.exception” If its start
+	 *             date is null
+	 * @throws HRSSystemException
 	 */
-	public void createProject(ProjectInfo info) throws HRSLogicalException, HRSSystemException {
+	public void createProject(ProjectInfo info) throws HRSLogicalException,
+			HRSSystemException {
 
 		log.info("entered createProject method");
 
@@ -99,8 +106,8 @@ public class ProjectBC {
 
 		if (info == null)
 			throw new HRSLogicalException("invalid.input.exception");
-		
-		if (info.getStartDate()==null)
+
+		if (info.getStartDate() == null)
 			throw new HRSLogicalException("start.date.required.exception");
 
 		Connection conn = null;
@@ -110,7 +117,7 @@ public class ProjectBC {
 			id = ProjectIdGenerator.getInstance().getNextId();
 			info.setProjectId(String.valueOf(id));
 			projDao.create(conn, info);
-			RowSet set = projDao.find(info);
+			//RowSet set = projDao.find(info);
 
 			dbAccess.commitConnection(conn);
 		} catch (IdGeneratorException e) {
@@ -150,9 +157,8 @@ public class ProjectBC {
 	 * 
 	 * @param id
 	 *            String
-	 * @return ProjectInfo object of searched Project with Accenture Details
-	 *         as a default and with all the employee related objects as an
-	 *         option
+	 * @return ProjectInfo object of searched Project with Accenture Details as
+	 *         a default and with all the employee related objects as an option
 	 * @throws HRSLogicalException
 	 *             when employee no. is null
 	 * @throws HRSSystemException
@@ -174,7 +180,7 @@ public class ProjectBC {
 
 			if (data == null)
 				throw new HRSLogicalException("record.not.found.exception");
-			
+
 		} catch (DAOException e) {
 			throw new HRSSystemException(e.getMessageKey(), e.getCause());
 		} catch (Exception e) {
@@ -201,7 +207,7 @@ public class ProjectBC {
 
 		}
 		ProjectInfo data = null;
-		//AccentureDetails accData = null;
+		// AccentureDetails accData = null;
 		Object temp = null;
 
 		try {
@@ -210,14 +216,14 @@ public class ProjectBC {
 			if (data == null)
 				throw new HRSLogicalException("employee.no.record.exception");
 
-			//temp = empAccDao.findByPK(data3.getInt(1));
+			// temp = empAccDao.findByPK(data3.getInt(1));
 
-			//if (temp == null)
-			//	throw new HRSLogicalException(
-			//			"accenture.details.no.record.exception");
+			// if (temp == null)
+			// throw new HRSLogicalException(
+			// "accenture.details.no.record.exception");
 
-			//accData = (AccentureDetails) temp;
-			//data.setAccentureDetails(accData);
+			// accData = (AccentureDetails) temp;
+			// data.setAccentureDetails(accData);
 
 		} catch (DAOException e) {
 			throw new HRSSystemException(e.getMessageKey(), e.getCause());
@@ -232,7 +238,101 @@ public class ProjectBC {
 		return data2;
 	}
 
-	public void updateProject(ProjectInfo info) {
+	public void updateProject(ProjectInfo info) throws HRSLogicalException, HRSSystemException {
 
+		log.info("entered createCategory method");
+
+		Object id = 0;
+
+		if (info == null)
+			throw new HRSLogicalException("invalid.input.exception");
+
+		Connection conn = null;
+
+		try {
+			conn = dbAccess.getConnection();
+
+			id = CategoryIdGenerator.getInstance().getNextId();
+
+			if (id == null)
+				throw new HRSLogicalException("id.required.exception");
+			// ---------------------------------------------------------
+
+			Object whereUpdate = (Object) projDao.findByPK(info.getId());
+
+			Object setUpdate = (Object) info;
+
+			if (!(projDao.update(conn, setUpdate, whereUpdate)))
+				throw new HRSLogicalException("record.not.updated.exception");
+
+			info.setProjectId(String.valueOf(id));
+
+			projDao.create(conn, info);
+			dbAccess.commitConnection(conn);
+
+		} catch (IdGeneratorException e) {
+			try {
+				dbAccess.rollbackConnection(conn);
+			} catch (DBAccessException e1) {
+			}
+			throw new HRSSystemException(e.getMessageKey(), e.getCause());
+		} catch (DBAccessException e) {
+			try {
+				dbAccess.rollbackConnection(conn);
+			} catch (DBAccessException e1) {
+			}
+			throw new HRSSystemException(e.getMessageKey(), e.getCause());
+		} catch (DAOException e) {
+			try {
+				dbAccess.rollbackConnection(conn);
+			} catch (DBAccessException e1) {
+			}
+			if (e.isLogical())
+				throw new HRSLogicalException(e.getMessageKey()
+						+ ".skillcategory");
+			else
+				throw new HRSSystemException(e.getMessageKey(), e.getCause());
+		} finally {
+			try {
+				dbAccess.closeConnection(conn);
+			} catch (DBAccessException e1) {
+			}
+		}
+
+		log.info("exited createEmployee method");
 	}
+
+	public Collection<ProjectInfo> searchReferenceData(
+			AbstractReferenceData dataFind, String approvalType)
+			throws HRSSystemException {
+		log.info("entered searchReferenceData method");
+
+		RowSet rset = null;
+		List<ProjectInfo> resultList = new ArrayList<ProjectInfo>();
+
+		try {
+			if (dataFind == null) {
+				rset = projDao.findByAll();
+			} else {
+				rset = projDao.find(dataFind);
+			}
+
+			while (rset.next()) {
+				if (rset.getString("status").equalsIgnoreCase(approvalType)) {
+					resultList.add(ProjectAssembler.getInfo(rset));
+				}
+
+			}
+		} catch (DAOException e) {
+			throw new HRSSystemException(e.getMessageKey(), e.getCause());
+		} catch (Exception e) {
+			throw new HRSSystemException("business.component.exception", e
+					.getCause());
+		}
+
+		log.info("exited searchReferenceData method");
+
+		return resultList;
+	}
+
 }
