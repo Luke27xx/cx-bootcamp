@@ -152,13 +152,13 @@ public class ProjectDAO implements DataAccessObjectInterface {
 
 		if ((object == null) || (!(object instanceof String))) {
 			if (arg.matches("^0-9")){
-				throw new DAOException("invalid.object.empdao", null,
+				throw new DAOException("invalid.object.projdao", null,
 						DAOException.ERROR, true);
 			}
 		}
 		
-		sqlStmt = "SELECT * FROM project WHERE empno = " + object;
-		
+		sqlStmt = "SELECT * FROM project WHERE id = " + object;
+		//String pk = (String)object;
 		Connection conn = null;
 
 		try {
@@ -166,7 +166,7 @@ public class ProjectDAO implements DataAccessObjectInterface {
 			conn = dbAccess.getConnection();
 
 			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
-			// stmt.setString(1, pk);
+			//stmt.setString(1, pk);
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
@@ -175,6 +175,8 @@ public class ProjectDAO implements DataAccessObjectInterface {
 			}
 
 			rs.close();
+			stmt.close();
+			
 			log.debug("found by pk ProjectInfo entry");
 		} catch (DBAccessException e) {
 			throw new DAOException(e.getMessageKey(), e, DAOException.ERROR,
