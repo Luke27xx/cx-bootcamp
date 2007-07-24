@@ -2,8 +2,18 @@
  * 
  */
 package com.jds.architecture.service.dao;
-//import com.jds.architecture.service.dao.EmployeeDAO;
+
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Date;
+import java.sql.ResultSet;
+import com.jds.apps.beans.EmployeeInfo;
+import com.jds.architecture.service.dao.EmployeeDAO;
+import com.jds.architecture.service.dbaccess.DBAccess;
 import com.jds.architecture.service.dbaccess.DBAccessException;
+import com.jds.architecture.service.idgenerator.EmployeeIdGenerator;
+import com.sun.rowset.CachedRowSetImpl;
 
 import junit.framework.TestCase;
 
@@ -13,12 +23,55 @@ import junit.framework.TestCase;
  */
 public class EmployeeDAOTest extends TestCase {
 
-	EmployeeDAO edb = null;
+	public EmployeeDAO edb = null;
+	
+	
+	private String dbDriver;
+	private String dbUrl;
+	private String dbUser;
+	private String dbPassword;		
+	private Connection conn = null;
+	
+	EmployeeInfo empInf = new EmployeeInfo();
+	
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
 		//super.setUp();
+		String dbDriver = "oracle.jdbc.driver.OracleDriver";
+		String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
+		String dbUser = "sampleuser";
+		String dbPassword = "samplepassword";		
+		//--------------------------------------
+		
+		empInf.setAge(25);
+		empInf.setCitizenship("English");
+		empInf.setCity("Riga");
+		empInf.setCivilStatus("Status");
+		empInf.setCountry("UK");
+		empInf.setEducationalAttainment("Bachelor in CS");
+		empInf.setEmail("John.Doe@mail.com");
+		empInf.setFirstName("Jhon");
+		empInf.setLastName("Doe");
+		empInf.setGender('M');
+		
+		//--------------------------------------
+		
+		try{
+			//DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());
+			Class.forName(dbDriver);
+			conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+			
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			//fail("Couldn't setup a connection");
+		}
+		finally{
+			
+		}
+		
 	}
 
 	/* (non-Javadoc)
@@ -26,12 +79,13 @@ public class EmployeeDAOTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		//super.tearDown();
+		conn.close();
 	}
 
 	/**
 	 * Test method for {@link com.jds.architecture.service.dao.EmployeeDAO#EmployeeDAO()}.
 	 */
-	public void testEmployeeDAO() {
+	/*public void testEmployeeDAO() {
 		try{
 			edb = new EmployeeDAO();
 		}
@@ -41,20 +95,34 @@ public class EmployeeDAOTest extends TestCase {
 		catch(DBAccessException e) {
 			fail("DBAccessException");
 		}
-		fail("Not yet implemented");
-	}
+		finally{
+			
+		}
+		//fail("Not yet implemented");
+	}*/
 
 	/**
 	 * Test method for {@link com.jds.architecture.service.dao.EmployeeDAO#create(java.sql.Connection, java.lang.Object)}.
 	 */
-	public void testCreate() {
-		fail("Not yet implemented");
-	}
+	/*public void testCreate() {
+			
+		try{
+			edb.create(conn, empInf);
+		}
+		catch(DAOException e){
+			fail(e.getMessageKey());
+		}
+		finally{
+			
+		}
+		
+	}*/
 
 	/**
 	 * Test method for {@link com.jds.architecture.service.dao.EmployeeDAO#remove(java.sql.Connection, java.lang.Object)}.
 	 */
 	public void testRemove() {
+	
 		fail("Not yet implemented");
 	}
 
@@ -62,6 +130,7 @@ public class EmployeeDAOTest extends TestCase {
 	 * Test method for {@link com.jds.architecture.service.dao.EmployeeDAO#findByPK(java.lang.Object)}.
 	 */
 	public void testFindByPK() {
+		
 		fail("Not yet implemented");
 	}
 
@@ -83,7 +152,28 @@ public class EmployeeDAOTest extends TestCase {
 	 * Test method for {@link com.jds.architecture.service.dao.EmployeeDAO#findByAll()}.
 	 */
 	public void testFindByAll() {
-		fail("Not yet implemented");
+		ResultSet rs;
+		try{
+			rs = (ResultSet)edb.findByAll();
+			rs.next();
+			if (rs.getString(2) == "jhon"){
+				rs.next();
+				if(rs.getString(2) == "AAA"){
+					
+				}else{
+					fail("Failure");
+				}
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			fail("Not yet implemented");
+		}
+		finally{
+			
+		}
+		
+		
 	}
 
 }
