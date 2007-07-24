@@ -198,11 +198,12 @@ public class ProjectDAO implements DataAccessObjectInterface {
 	 * @return RowSet - rowset of found records
 	 */
 	public RowSet find(Object object) throws DAOException {
+		
 		ProjectInfo eInf = (ProjectInfo) object;
 		String query = DAOConstants.PROJ_FIND_MAIN;
 		String criteria = "";
 		StatementGenProject stmtGen = new StatementGenProject();
-		
+
 		try {
 			criteria = stmtGen
 					.transformStmt(eInf, DAOConstants.STMT_TYPE_WHERE);
@@ -212,19 +213,15 @@ public class ProjectDAO implements DataAccessObjectInterface {
 
 		}
 
-		query = query.replaceAll("@", criteria);
-		ResultSet rs;
-		CachedRowSet result = null;
 		Connection conn = null;
-
+		query = query.replaceAll("@", criteria);
+		CachedRowSet result = null;
 		try {
 			log.debug("finding all ProjectInfo entries");
 			conn = dbAccess.getConnection();
 			result = new CachedRowSetImpl();
-
 			PreparedStatement stmnt = conn.prepareStatement(query);
-			rs = stmnt.executeQuery();
-
+			ResultSet rs = stmnt.executeQuery();
 			result.populate(rs);
 			rs.close();
 			stmnt.close();
