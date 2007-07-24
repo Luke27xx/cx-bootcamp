@@ -166,7 +166,7 @@ return data;
 }	
 	
 //===================================	
-	public Collection<SkillCategory> searchEmployees(SkillCategory info)
+	public Collection<SkillCategory> searchSkillCategory(SkillCategory info)
 	throws HRSSystemException, HRSLogicalException, DAOException {
 
 log.info("entered searchSkillCategory method");
