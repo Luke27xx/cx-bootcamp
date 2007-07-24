@@ -12,7 +12,7 @@ import javax.sql.rowset.CachedRowSet;
 import com.sun.rowset.CachedRowSetImpl;
 
 public class Testing {
-	private static String url = "jdbc:oracle:oci:@10.122.131.216:1521:XE";
+	private static String url = "jdbc:oracle:thin:@10.122.131.216:1521:XE";
 	
 	public static void insertTestRow(Connection conn) {
 		String createQuery = "INSERT INTO project "
@@ -78,7 +78,7 @@ public class Testing {
 			set.first();
 			System.out.print(set.getString("name"));
 			
-			deleteTestRow(conn);
+			//deleteTestRow(conn);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
