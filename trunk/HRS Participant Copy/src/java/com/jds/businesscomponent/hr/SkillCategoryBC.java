@@ -2,6 +2,7 @@ package com.jds.businesscomponent.hr;
 
 import java.sql.Connection;
 import java.util.Collection;
+import java.util.List;
 
 import javax.sql.RowSet;
 
@@ -165,25 +166,32 @@ return data;
 	throws HRSSystemException, HRSLogicalException, DAOException {
 
 log.info("entered searchSkillCategory method");
-RowSet data3;
-SkillCategory data4;
-if (info == null) {
-	data3 = catDao.findByAll();
-	// throw new HRSLogicalException ("id.required.exception");
-	data4 = (SkillCategory) data3;
-	return (Collection<SkillCategory>) data4;
+
+
+
+
+RowSet data;
+SkillCategory data2;
+if (dataFind == null) {
+	data = catDao.findByAll();
+
+	data2 = (SkillCategory) data;
+	return (Collection<SkillCategory>) data2;
 
 }
-SkillCategory data = null;
-//AccentureDetails accData = null;
+SkillCategory data3 = null;
 Object temp = null;
+List list = null;
 
 try {
-	data3 = catDao.find(info);
+	temp = catDao.find(dataFind);
 
-	if (data == null)
-		throw new HRSLogicalException("employee.no.record.exception");
-
+ for (int i=0; i<dataFind.getStatus().length();i++){
+	 if (dataFind.getStatus().equals(approvalType)) 
+	 {
+		 list.add(dataFind.getStatus());
+	 }
+ }
 
 
 } catch (DAOException e) {
@@ -195,8 +203,8 @@ try {
 
 log.info("exited searchEmployee method");
 
-Collection<SkillCategory> data2 = (Collection<SkillCategory>) data;
-return data2;
+Collection<SkillCategory> data4 = (Collection<SkillCategory>) list;
+return data4;
 }
    
 //==============================================
