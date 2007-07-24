@@ -35,7 +35,8 @@
         <mkdir dir="${classes.dir}"/>
         <javac srcdir="${gensrc.java.dir}" 
         		destdir="${classes.dir}"
-        		failonerror="${compile.fail}">
+        		failonerror="${compile.fail}"
+        		debug="true">
         	<classpath> 
 				<path refid="class.path"/>        	
 			</classpath>        	
