@@ -86,7 +86,7 @@ public class EmployeeDAO implements DataAccessObjectInterface {
 			PreparedStatement stmt = conn.prepareStatement(sqlstmt);
 			EmployeeAssembler.getPreparedStatement(employee, stmt);
 			stmt.executeUpdate();
-
+			stmt.close();
 			log.debug("created EmployeeInfo entry");
 		} catch (SQLException e) {
 			throw new DAOException("sql.create.exception.empdao", e,
@@ -109,10 +109,14 @@ public class EmployeeDAO implements DataAccessObjectInterface {
 	public boolean remove(Connection conn, Object object) throws DAOException {
 		// EmployeeInfo eInf;
 		String query = DAOConstants.EMPSQL_DELETE;
+		String arg = (String)object;
 		//
 		PreparedStatement stmnt = null;
 		if ((object == null) || (!(object instanceof String))) {
-
+			if (arg.matches("^0-9")){
+				throw new DAOException("invalid.object.empdao", null,
+						DAOException.ERROR, true);
+			}
 		}
 
 		try {
