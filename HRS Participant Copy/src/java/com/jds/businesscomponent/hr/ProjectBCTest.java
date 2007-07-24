@@ -121,7 +121,6 @@ public class ProjectBCTest {
 		} catch (HRSSystemException e) {
 			System.err.println(e.getMessageKey());
 			fail("smth wrong with DAO or IDGens, coz wrong Exception thrown");
-			// e.printStackTrace();
 		} catch (HRSLogicalException e) {
 			if (e.getMessageKey().equals("record.not.found.exception"))
 				return;
