@@ -85,8 +85,9 @@ public class ProjectDAO implements DataAccessObjectInterface {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sqlstmt);
 			ProjectAssembler.getPreparedStatement(project, stmt);
+			
 			stmt.executeUpdate();
-
+			stmt.close();
 			log.debug("created ProjectInfo entry");
 		} catch (SQLException e) {
 			throw new DAOException("sql.create.exception.empdao", e,
@@ -109,7 +110,6 @@ public class ProjectDAO implements DataAccessObjectInterface {
 	public boolean remove(Connection conn, Object object) throws DAOException {
 		// ProjectInfo eInf;
 		String query = DAOConstants.PROJ_DELETE;
-		//
 		PreparedStatement stmnt = null;
 		if ((object == null) || (!(object instanceof String))) {
 
@@ -199,6 +199,10 @@ public class ProjectDAO implements DataAccessObjectInterface {
 	 */
 	public RowSet find(Object object) throws DAOException {
 		
+		if ((object == null)|(!(object instanceof ProjectInfo))){
+			throw new DAOException("invalid.object.projdao", null,
+			DAOException.ERROR, true);
+		}
 		ProjectInfo eInf = (ProjectInfo) object;
 		String query = DAOConstants.PROJ_FIND_MAIN;
 		String criteria = "";
