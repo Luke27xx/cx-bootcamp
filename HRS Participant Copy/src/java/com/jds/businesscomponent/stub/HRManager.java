@@ -20,7 +20,9 @@ import com.jds.apps.beans.SkillCategory;
 import com.jds.apps.beans.SkillsInformation;
 import com.jds.architecture.exceptions.HRSLogicalException;
 import com.jds.architecture.exceptions.HRSSystemException;
-
+import com.jds.businesscomponent.hr.EmployeeBC;
+import com.jds.businesscomponent.hr.ProjectBC;
+import com.jds.businesscomponent.hr.SkillBC;
 
 /**
  * 
@@ -31,13 +33,32 @@ import com.jds.architecture.exceptions.HRSSystemException;
  */
 public class HRManager {
 
-	private static HRManager thisInstance;
+	private static HRManager thisInstance = null;
+	private EmployeeBC eBC;
+	private SkillBC sBC;
+	private ProjectBC pBC;
+	
+	private EmployeeInfo EI;
+	private Collection sEC;
+	private SkillCategory sCat;
+	private Collection sAC;
+	private SkillsInformation sSSI;
+	private Collection cSAS;
+	private ProjectInfo sP;
+	private Collection cSAP;
+	
+	public HRManager() throws HRSSystemException{
+		System.out.println("HRManager constructor");
+		eBC = new EmployeeBC();
+		//sBC = new SkillBC();
+		//pBC = new ProjectBC();
+	}
 	
 	public static HRManager getInstance() throws HRSSystemException {
 		if (thisInstance == null) {
 		    thisInstance = new HRManager();
 		}
-		
+	
 		return thisInstance;
 	}
 	
@@ -63,6 +84,8 @@ public class HRManager {
 	    if(variableTest == 2) {
 	        throw new HRSLogicalException("sql.ORA00001.employee");
 	    }
+	    
+	    eBC.createEmployee(info);
 	    
 	    return;
 	}
