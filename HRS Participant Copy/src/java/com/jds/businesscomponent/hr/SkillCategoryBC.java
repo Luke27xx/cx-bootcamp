@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.sql.RowSet;
 
 import com.jds.apps.Constants;
+import com.jds.apps.beans.AbstractReferenceData;
 import com.jds.apps.beans.AccentureDetails;
 import com.jds.apps.beans.EmployeeInfo;
 import com.jds.apps.beans.SkillCategory;
@@ -30,7 +31,7 @@ public class SkillCategoryBC {
 	
 	private Constants cons;
 	private DataAccessObjectInterface catDao = null;
-	private DataAccessObjectInterface catAccDao = null;
+	//private DataAccessObjectInterface catAccDao = null;
 	private DBAccess dbAccess = null;
 
 	private static Logger log = (Logger) ServiceFactory.getInstance()
@@ -127,7 +128,7 @@ log.info("exited createEmployee method");
 	
 //=========================================================
 	
-	public SkillCategory searchSkillCategory(String skillcat) throws HRSSystemException,
+	public SkillCategory searchCategory(String skillcat) throws HRSSystemException,
 	HRSLogicalException {
 
 log.info("entered searchEmployee method");
@@ -136,7 +137,7 @@ if (skillcat == null)
 	throw new HRSLogicalException("id.required.exception");
 
 SkillCategory data = null;
-//AccentureDetails accData = null;
+
 Object temp = null;
 
 try {
@@ -144,12 +145,6 @@ try {
 
 	if (data == null)
 		throw new HRSLogicalException("record.not.found.exception");
-
-	temp = catAccDao.findByPK(skillcat);
-
-	if (temp == null)
-		throw new HRSLogicalException(
-				"record.not.found.exception");
 
 
 
@@ -165,8 +160,8 @@ log.info("exited searchEmployee method");
 return data;
 }	
 	
-//===================================	
-	public Collection<SkillCategory> searchSkillCategory(SkillCategory info)
+//============================================================	
+	public Collection<SkillCategory> searchReferencesDate(AbstractReferenceData dataFind, String approvalType)
 	throws HRSSystemException, HRSLogicalException, DAOException {
 
 log.info("entered searchSkillCategory method");
@@ -189,12 +184,6 @@ try {
 	if (data == null)
 		throw new HRSLogicalException("employee.no.record.exception");
 
-	temp = catAccDao.findByPK(data3.getInt(1));
-
-	if (temp == null)
-		throw new HRSLogicalException(
-				"accenture.details.no.record.exception");
-
 
 
 } catch (DAOException e) {
@@ -211,8 +200,17 @@ return data2;
 }
 
 //==============================================
+	public Collection  searchApprovedCategories (SkillCategory dataFind)
+	 throws HRSSystemException, HRSLogicalException {
+		
+		
+		
+		return null;
+	}
 	
-public void updateEmployee(EmployeeInfo info) {
+//==============================================
+	
+public void updateSkillCategory(SkillCategory info) {
 
 }
 }
