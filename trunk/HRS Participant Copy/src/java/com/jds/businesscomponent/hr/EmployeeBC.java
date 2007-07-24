@@ -24,6 +24,7 @@ import com.jds.architecture.service.dao.DAOConstants;
 import com.jds.architecture.service.dao.DAOException;
 import com.jds.architecture.service.dao.DAOFactory;
 import com.jds.architecture.service.dao.DataAccessObjectInterface;
+import com.jds.architecture.service.dao.EmpAccentureDetailsDAO;
 import com.jds.architecture.service.dao.EmployeeDAO;
 import com.jds.architecture.service.dbaccess.DBAccess;
 import com.jds.architecture.service.dbaccess.DBAccessException;
@@ -52,7 +53,7 @@ public class EmployeeBC {
 	 */
 	public EmployeeBC() throws HRSSystemException {
 
-		log.info("entered EmployeeBC constructor");
+		System.out.println("entered EmployeeBC constructor");
 
 		try {
 			empDao = (EmployeeDAO) DAOFactory.getFactory().getDAOInstance(
@@ -60,8 +61,8 @@ public class EmployeeBC {
 
 			// TODO: For implementation.
 			//					
-			// empAccDao = (EmpAccentureDetailsDAO)DAOFactory.getFactory()
-			// .getDAOInstance(DAOConstants.DAO_EMPACC);
+			 empAccDao = (EmpAccentureDetailsDAO)DAOFactory.getFactory()
+			 .getDAOInstance(DAOConstants.DAO_EMPACC);
 
 			dbAccess = DBAccess.getDBAccess();
 			cons = new Constants();
@@ -79,7 +80,7 @@ public class EmployeeBC {
 					.getCause());
 		}
 
-		log.info("exited EmployeeBC constructor");
+		System.out.println("exited EmployeeBC constructor");
 
 	}
 
