@@ -200,14 +200,7 @@ return data2;
 }
 
 //==============================================
-	public Collection  searchApprovedCategories (SkillCategory dataFind)
-	 throws HRSSystemException, HRSLogicalException {
-		
-		SkillCategorysearchReferencesDate(dataFind.getCategoryName(), dataFind);
-		
-		return null;
-	}
-	
+
 //==============================================
 	
 public void updateSkillCategory(SkillCategory info) {
