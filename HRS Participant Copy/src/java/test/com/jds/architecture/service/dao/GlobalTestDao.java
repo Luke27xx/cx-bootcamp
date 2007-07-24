@@ -1,15 +1,19 @@
 package test.com.jds.architecture.service.dao;
 
-
+/**
+ * 
+ */
 
 import javax.sql.rowset.CachedRowSet;
-import org.junit.Test;
+//import org.junit.Test;
+
+//import com.jds.architecture.service.dao.DAOException;
 
 
 import junit.framework.TestCase;
 
 public class GlobalTestDao extends TestCase {
-	EmployeeDaoTest test = null;
+/*	EmployeeDaoTest test = null;
 
 	public GlobalTestDao() {
 		try {
@@ -39,11 +43,11 @@ public class GlobalTestDao extends TestCase {
 	public void testDelete() throws Exception {
 		test.myRemove();
 	}
-
+*/
 	public void testToStandardNormal() throws Exception {
 
 		// TEST CREATE!-----------------------------------
-		CachedRowSet help = null;
+		/*CachedRowSet help = null;
 
 		help = (CachedRowSet) test.findByAll();
 		int before = help.size();
@@ -63,19 +67,25 @@ public class GlobalTestDao extends TestCase {
 		before--;
 		help = (CachedRowSet) test.findByAll();
 		System.out.print(help.size() + "<<<kol-vo!");
+		
 		assertEquals(before, help.size());
-		test.closeConn();
+		*/
+		SkillCategoryTest testCategoryTest= new SkillCategoryTest();
+		testCategoryTest.myCreate();
+		
+		
+		testCategoryTest.closeConn();
+		
+	//	test.closeConn();
 	}
 
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
+/*	@Test(expected = DAOException.class)
 	public void testToStandardError() {
 		try {
-			int xz[] = new int[3];
-
-			xz[4] = 2;
+		test.errorTestCreate();
 
 		} catch (Exception e) {
-		//	e.printStackTrace();
+
 		}
-	}
+	}*/
 }
