@@ -43,7 +43,7 @@ public class AccDetailsAssembler {
 	}
 
 	/**
-	 * Creates populated AccentureDetails vo from the Row set
+	 * Creates populated AccentureDetails from the Row set
 	 * 
 	 * @param rs
 	 *            Row Set
