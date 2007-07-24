@@ -14,6 +14,7 @@ import com.jds.architecture.exceptions.HRSSystemException;
 
 public class ProjectBCTest {
 	private ProjectBC pBC;
+
 	@Before
 	public void setUp() throws Exception, HRSSystemException {
 		pBC = new ProjectBC();
@@ -24,63 +25,78 @@ public class ProjectBCTest {
 	}
 
 	@Test
-	public void testCreateProjectValid() throws HRSLogicalException, HRSSystemException {
+	public void testCreateProjectValid() throws HRSLogicalException,
+			HRSSystemException {
 		ProjectInfo info = new ProjectInfo();
 		Date startDate = Date.valueOf("2007-02-23");
 		Date endDate = Date.valueOf("2007-05-01");
-		
-		info.setProjectId(""+Math.round(Math.random()*999));
+
+		info.setProjectId("" + Math.round(Math.random() * 999));
 		info.setDescription("01010001");
 		info.setClient("lalalka");
 		info.setStartDate(startDate);
-		info.setStartDate(endDate);
-		
-		info.setProjectName(""+Math.round(Math.random()*999));
-		
+		info.setEndDate(endDate);
+
+		info.setProjectName("" + Math.round(Math.random() * 999));
+
 		pBC.createProject(info);
 	}
-	
+
 	@Test
 	public void testCreateProjectNull() {
 		ProjectInfo info = null;
-		
+
 		try {
 			pBC.createProject(info);
 		} catch (HRSLogicalException e) {
-			if (e.getMessageKey().equals("invalid.input.exception")) return;
+			if (e.getMessageKey().equals("invalid.input.exception"))
+				return;
 		} catch (HRSSystemException e) {
 			e.printStackTrace();
 			fail("Wrong exception catched. Smth wrong with IDGen or something");
 		}
-		fail ("Did not catch an expected exception");
+		fail("Did not catch an expected exception");
 	}
-	
+
 	@Test
 	public void testCreateProjectWrongStartDate() {
 		ProjectInfo info = new ProjectInfo();
 		Date startDate = Date.valueOf("1000-02-23");
 		Date endDate = Date.valueOf("2007-05-01");
-		
-		info.setProjectId(""+Math.round(Math.random()*999));
+
+		info.setProjectId("" + Math.round(Math.random() * 999));
 		info.setDescription("01010001");
 		info.setClient("lalalka");
-		info.setStartDate(startDate);
-		info.setStartDate(endDate);
-		info.setProjectName(""+Math.round(Math.random()*999));
+		// info.setStartDate(startDate);
+		info.setEndDate(endDate);
+		info.setProjectName("" + Math.round(Math.random() * 999));
 		try {
 			pBC.createProject(info);
 		} catch (HRSLogicalException e) {
-			if (e.getMessageKey().equals("start.date.required.exception")) return;
+			if (e.getMessageKey().equals("start.date.required.exception"))
+				return;
 		} catch (HRSSystemException e) {
 			e.printStackTrace();
 			fail("Wrong exception catched. Smth wrong with IDGen or something");
 		}
-		fail ("Did not catch an expected exception");
+		fail("Did not catch an expected exception");
 	}
-	
+
 	@Test
-	public void testSearchProject() {
-		fail("Not yet implemented"); // TODO
+	public void testSearchProject() throws HRSLogicalException, HRSSystemException {
+		ProjectInfo info = new ProjectInfo();
+		Date startDate = Date.valueOf("2007-02-23");
+		Date endDate = Date.valueOf("2007-05-01");
+
+		info.setProjectId("123321");
+		info.setDescription("asfsawww222444");
+		info.setClient("asdsafsafsaf");
+		info.setStartDate(startDate);
+		info.setEndDate(endDate);
+		info.setProjectName("" + Math.round(Math.random() * 999));
+
+		pBC.createProject(info);
+		info = pBC.searchProject("123321");
 	}
 
 	@Test
@@ -92,34 +108,66 @@ public class ProjectBCTest {
 			fail("smth  wrong, coz wrong Exception thrown");
 			e.printStackTrace();
 		} catch (HRSLogicalException e) {
-			if (e.getMessageKey().equals("id.required.exception")) 
+			if (e.getMessageKey().equals("id.required.exception"))
+				return;
+		}
+		fail("smth  wrong, coz no exception thrown");
+	}
+
+	@Test
+	public void testSearchProjectNotFound() {
+		try {
+			pBC.searchProject("123456789876");
+		} catch (HRSSystemException e) {
+			System.err.println(e.getMessageKey());
+			fail("smth wrong with DAO or IDGens, coz wrong Exception thrown");
+			// e.printStackTrace();
+		} catch (HRSLogicalException e) {
+			if (e.getMessageKey().equals("record.not.found.exception"))
 				return;
 		}
 		fail("smth  wrong, coz no exception thrown");
 	}
 	
 	@Test
-	public void testSearchProjectNotFound() {
+	public void testUpdateProject() throws HRSLogicalException,
+			HRSSystemException {
+		ProjectInfo info = new ProjectInfo();
+		Date startDate = Date.valueOf("1000-02-23");
+		Date endDate = Date.valueOf("2007-05-01");
+
+		info.setProjectId("" + Math.round(Math.random() * 999));
+		info.setDescription("01010001");
+		info.setClient("lalalka");
+		info.setStartDate(startDate);
+		info.setStartDate(endDate);
+		info.setProjectName("" + Math.round(Math.random() * 999));
+		pBC.createProject(info);
+		info.setDescription("010gsdgsdg10001");
+		info.setClient("lasdgsdglalka");
+		pBC.updateProject(info);
+
+	}
+
+	@Test
+	public void testUpdateProjectNull() {
+		ProjectInfo info = null;
 		try {
-			pBC.searchProject("1113111111");
-		} catch (HRSSystemException e) {
-			fail("smth wrong with DAO or IDGens, coz wrong Exception thrown");
-			e.printStackTrace();
+			pBC.updateProject(info);
 		} catch (HRSLogicalException e) {
-			if (e.getMessageKey().equals("record.not.found.exception")) 
+			if (e.getMessageKey().equals("invalid.input.exception"))
 				return;
+		} catch (HRSSystemException e) {
+			e.printStackTrace();
+			fail("Wrong exception catched. Smth wrong with IDGen or something");
 		}
-		fail("smth  wrong, coz no exception thrown");
-	}	
-
-	@Test
-	public void testSearchProjects() {
-		fail("Not yet implemented"); // TODO
+		fail("Did not catch an expected exception");
 	}
 
 	@Test
-	public void testUpdateProject() {
-		fail("Not yet implemented"); // TODO
+	public void searchReferenceData() {
+		// TODO: Someone
+		// Any ideas how to do it ?
+		fail("Not yet implemented");
 	}
-
 }
