@@ -9,6 +9,7 @@
 package com.jds.businesscomponent.hr;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -117,8 +118,9 @@ public class ProjectBC {
 			id = ProjectIdGenerator.getInstance().getNextId();
 			info.setProjectId(String.valueOf(id));
 			projDao.create(conn, info);
+			
 			//RowSet set = projDao.find(info);
-
+			//set.close();		
 			dbAccess.commitConnection(conn);
 		} catch (IdGeneratorException e) {
 			try {
@@ -252,13 +254,9 @@ public class ProjectBC {
 		try {
 			conn = dbAccess.getConnection();
 
-			id = CategoryIdGenerator.getInstance().getNextId();
+			id = info.getProjectId();
 
-			if (id == null)
-				throw new HRSLogicalException("id.required.exception");
-			// ---------------------------------------------------------
-
-			Object whereUpdate = (Object) projDao.findByPK(info.getId());
+			Object whereUpdate = projDao.findByPK(info.getProjectId());
 
 			Object setUpdate = (Object) info;
 
@@ -270,12 +268,6 @@ public class ProjectBC {
 			projDao.create(conn, info);
 			dbAccess.commitConnection(conn);
 
-		} catch (IdGeneratorException e) {
-			try {
-				dbAccess.rollbackConnection(conn);
-			} catch (DBAccessException e1) {
-			}
-			throw new HRSSystemException(e.getMessageKey(), e.getCause());
 		} catch (DBAccessException e) {
 			try {
 				dbAccess.rollbackConnection(conn);
