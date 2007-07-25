@@ -58,7 +58,7 @@ public class ProjectDAOTest {
 
 	private void deleteTestRow(Connection conn) {
 		String createQuery = "DELETE FROM project "
-				+ "WHERE id='10' AND name='TestProject'";
+				+ "WHERE id='10'";
 		PreparedStatement stmt = null;
 		try {
 			stmt = conn.prepareStatement(createQuery);
@@ -273,10 +273,11 @@ public class ProjectDAOTest {
 		conn = setUpConnection();
 
 		insertTestRow(conn);
-
+			
 		assertTrue(prj.update(conn, set, where));
-
+		
 		deleteTestRow(conn);
+		
 	}
 
 	@Test
@@ -327,6 +328,7 @@ public class ProjectDAOTest {
 		if (i <= 0){
 			fail("Returned row count <= 0");
 		}
+		rs.close();
 		prj.remove(conn, "1");
 		prj.remove(conn, "2");
 		
