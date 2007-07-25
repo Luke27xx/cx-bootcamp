@@ -92,6 +92,12 @@ public class StatementGenProject extends StatementGenerator {
 			
 		}
 		
+		if(obj.getStatus() != null) {
+			strBuffer.append(getColumnValue(isSet, DAOConstants.COL_STATUS, 
+					obj.getStatus(), strConstant));				
+			
+		}
+		
 		if ( strBuffer.toString().length() > 0) {
 			if (stmtType == DAOConstants.STMT_TYPE_SET) { 
 				strTemp = strBuffer.toString().substring(0,
