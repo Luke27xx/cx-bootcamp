@@ -71,14 +71,14 @@ public class ProjectDAO implements DataAccessObjectInterface {
 	public void create(Connection conn, Object object) throws DAOException {
 
 		if (!(object instanceof ProjectInfo))
-			throw new DAOException("invalid.object.empdao", null,
+			throw new DAOException("invalid.object.projdao", null,
 					DAOException.ERROR, true);
 
 		String sqlstmt = DAOConstants.PROJ_CREATE;
 		ProjectInfo project = (ProjectInfo) object;
 
 		if (project.getProjectId() == null)
-			throw new DAOException("invalid.object.empdao", null,
+			throw new DAOException("invalid.object.projdao", null,
 					DAOException.ERROR, true);
 
 		log.debug("creating ProjectInfo entry");
@@ -224,7 +224,7 @@ public class ProjectDAO implements DataAccessObjectInterface {
 		}
 
 		Connection conn = null;
-		query = query.replaceAll("@", criteria);
+		query = query.replaceFirst("@", criteria);
 		CachedRowSet result = null;
 		try {
 			log.debug("finding all ProjectInfo entries");
