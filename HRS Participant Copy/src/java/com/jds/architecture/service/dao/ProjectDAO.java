@@ -113,11 +113,9 @@ public class ProjectDAO implements DataAccessObjectInterface {
 		String arg = (String) object;
 		String query = DAOConstants.PROJ_DELETE;
 		PreparedStatement stmnt = null;
-		if ((object == null) || (!(object instanceof String))) {
-			if (arg.matches("[^0-9]")){
+		if ((object == null) | (!(object instanceof String)) | (arg.matches("[^0-9]"))) {	
 				throw new DAOException("invalid.object.empdao", null,
 						DAOException.ERROR, true);
-			}
 		}
 
 		try {
