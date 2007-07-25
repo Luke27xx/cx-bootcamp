@@ -1,11 +1,9 @@
 package com.jds.businesscomponent.stub;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
 
 import test.com.jds.architecture.service.dao.SkillCategoryTest;
 
@@ -22,7 +20,6 @@ import com.jds.businesscomponent.hr.SkillCategoryBC;
 import com.jds.businesscomponent.hr.EmployeeBC;
 import com.jds.businesscomponent.hr.ProjectBC;
 import com.jds.businesscomponent.hr.SkillBC;
-
 
 public class HRManager {
 
@@ -59,7 +56,6 @@ public class HRManager {
 		return thisInstance;
 	}
 
-
 	public void createEmployee(EmployeeInfo info) throws HRSSystemException,
 			HRSLogicalException {
 
@@ -77,7 +73,6 @@ public class HRManager {
 
 	}
 
-
 	public void updateEmployee(EmployeeInfo info) throws HRSSystemException,
 			HRSLogicalException {
 
@@ -94,7 +89,6 @@ public class HRManager {
 		return;
 	}
 
-	
 	public Collection searchEmployees(EmployeeInfo info)
 			throws HRSSystemException, HRSLogicalException {
 
@@ -126,7 +120,6 @@ public class HRManager {
 		return myList;
 	}
 
-	
 	public EmployeeInfo searchEmployee(String empno) throws HRSSystemException,
 			HRSLogicalException {
 
@@ -169,13 +162,11 @@ public class HRManager {
 		return emp1;
 	}
 
-
 	public void createCategory(SkillCategory info) throws HRSSystemException,
 			HRSLogicalException {
-  //sadfasf
+
 		skillCategory.createCategory(info);
 	}
-
 
 	public void updateCategory(SkillCategory info) throws HRSSystemException,
 			HRSLogicalException {
@@ -183,39 +174,31 @@ public class HRManager {
 		skillCategory.updateSkillCategory(info);
 	}
 
-	
 	public Collection searchApprovedCategories(SkillCategory dataFind)
 			throws HRSSystemException, HRSLogicalException {
 		Collection<SkillCategory> myList = new ArrayList<SkillCategory>();
-	
-		
 		try {
 
 			myList = skillCategory.searchApprovedCategories(dataFind);
-			 
-			System.out.println("kol====="+myList.size());
+
+			System.out.println("kol=====" + myList.size());
 		} catch (Exception e) {
 
 		}
-	
-/*		
-	  try {
-		  
-		  ccc = new SkillCategoryTest(); SkillCategoryBC skillCatBC = new
-		  SkillCategoryBC();
-		   // skillCatBC.s
-		  RowSet rs = ccc.findByAll(); while (rs.next()) 
-		  {
- 		  SkillCategory skill2 = new SkillCategory();
-		  skill2.setCategoryId(rs.getString("id"));
-		  skill2.setCategoryName(rs.getString("name"));
-		  skill2.setCategoryDescription(rs.getString("description"));
-		  skill2.setStatus(rs.getString("status")); myList.add(skill2);
-		   }		  
-		  System.err.println("my LIST>>>" + myList.size());
-		   } catch (Exception e) { // TODO: handle exception
-			 }
-*/		 
+
+		/*
+		 * try {
+		 * 
+		 * ccc = new SkillCategoryTest(); SkillCategoryBC skillCatBC = new
+		 * SkillCategoryBC(); // skillCatBC.s RowSet rs = ccc.findByAll(); while
+		 * (rs.next()) { SkillCategory skill2 = new SkillCategory();
+		 * skill2.setCategoryId(rs.getString("id"));
+		 * skill2.setCategoryName(rs.getString("name"));
+		 * skill2.setCategoryDescription(rs.getString("description"));
+		 * skill2.setStatus(rs.getString("status")); myList.add(skill2); }
+		 * System.err.println("my LIST>>>" + myList.size()); } catch (Exception
+		 * e) { // TODO: handle exception }
+		 */
 
 		return myList;
 	}
