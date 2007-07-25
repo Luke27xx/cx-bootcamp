@@ -13,6 +13,7 @@ import com.jds.apps.beans.SkillCategory;
 import com.jds.architecture.service.dao.DAOException;
 import com.jds.architecture.service.dao.SkillCategoryDAO;
 import com.jds.architecture.service.dbaccess.DBAccessException;
+import com.jds.businesscomponent.hr.SkillCategoryBC;
 
 public class SkillCategoryTest extends SkillCategoryDAO {
 	Connection conn = null;
@@ -66,22 +67,24 @@ public class SkillCategoryTest extends SkillCategoryDAO {
 		myConnect();
 		
 		SkillCategory skCat = new SkillCategory();
-		skCat.setCategoryId("2");
-		skCat.setCategoryDescription("asd");
-		skCat.setCategoryName("1179277520");
+		skCat.setCategoryId("111111");
+		skCat.setCategoryDescription("abc");
+		skCat.setCategoryName("ttt111");
 		
 		
-		create(conn, skCat);
+		//create(conn, skCat);
+		
+		
+		
 		SkillCategory obj= new SkillCategory();
 		
 		
-		obj.setDescription("11v11");
-		obj.setCategoryName("nice");
+		obj.setDescription("11711");
+		obj.setCategoryName("" + Math.round(Math.random() * 1000));
 		System.err.println(skCat.getCategoryName()+"< do i posle >"+obj.getCategoryName());
-		update(conn, obj, skCat);
-		
-		SkillCategory ob=(SkillCategory)findByPK(skCat);
-		System.out.println("after update,find by pk "+ob.getCategoryName());
+	
+		//update(conn, obj, skCat);
+	
 		
 		
 		
@@ -89,11 +92,13 @@ public class SkillCategoryTest extends SkillCategoryDAO {
 		
 		System.out.println("CREATED!!!!" + skCat);
 		CachedRowSet help = null;
+	//	remove(conn, skCat);
 		help = (CachedRowSet) findByAll();
+		
 		System.out.println(help.size() + "<<<kol-vo>>>");
 		
 		
-		remove(conn, skCat);
+		
 		} catch (Exception e) {
 			// TODO: handle exception
 		}finally
