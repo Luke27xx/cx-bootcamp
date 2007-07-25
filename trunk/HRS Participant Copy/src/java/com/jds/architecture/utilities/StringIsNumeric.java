@@ -52,8 +52,11 @@ public class StringIsNumeric implements ValidationStrategy {
 	public boolean validate(Object target) {
 		char[] charArray = target.toString().toCharArray();
 		
-
-
+		for(int i = 0 ; i < charArray.length; i++) {
+			if(!(Character.isDigit(charArray[i])))	
+				return false;
+		}
+		
 		return true;
 	}
 
