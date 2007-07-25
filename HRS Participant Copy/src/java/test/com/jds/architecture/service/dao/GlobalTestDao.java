@@ -4,7 +4,15 @@ package test.com.jds.architecture.service.dao;
  * 
  */
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.sql.rowset.CachedRowSet;
+
+import com.jds.apps.beans.SkillCategory;
+import com.jds.architecture.exceptions.HRSLogicalException;
+import com.jds.architecture.exceptions.HRSSystemException;
+import com.jds.businesscomponent.hr.SkillCategoryBC;
 //import org.junit.Test;
 
 //import com.jds.architecture.service.dao.DAOException;
@@ -44,7 +52,7 @@ public class GlobalTestDao extends TestCase {
 		test.myRemove();
 	}
 */
-	public void testToStandardNormal() throws Exception {
+	public void testToStandardNormal() throws HRSSystemException, HRSLogicalException, Exception {
 
 		// TEST CREATE!-----------------------------------
 		/*CachedRowSet help = null;
@@ -70,11 +78,31 @@ public class GlobalTestDao extends TestCase {
 		
 		assertEquals(before, help.size());
 		*/
-		SkillCategoryTest testCategoryTest= new SkillCategoryTest();
-		testCategoryTest.myCreate();
+	//	SkillCategoryTest testCategoryTest= new SkillCategoryTest();
+//		testCategoryTest.myCreate();
+	
+		 
+		
+		Collection<SkillCategory> myList = new ArrayList<SkillCategory>();
+		SkillCategoryTest t=new SkillCategoryTest();
+	//	t.myCreate();
+			
+		
+		SkillCategoryBC skillCategory = new SkillCategoryBC();
+		SkillCategory skCat = new SkillCategory();
+		skCat.setCategoryId("111111");
+		skCat.setCategoryDescription("abc");
+		skCat.setCategoryName("ttt111");
 		
 		
-		testCategoryTest.closeConn();
+		
+		myList = skillCategory.searchApprovedCategories(null);
+		System.out.println("myList=>>>>"+myList.size());
+		
+		
+		
+		
+	//	testCategoryTest.closeConn();
 		
 	//	test.closeConn();
 	}
