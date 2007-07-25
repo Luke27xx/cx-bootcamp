@@ -32,9 +32,9 @@ public class SkillAssembler {
 			PreparedStatement stmt) throws SQLException {
 		stmt.setString(1, skill.getSkillId());
 		stmt.setString(2, skill.getCategoryId());
-		stmt.setString(3, skill.getCategoryName());
+		stmt.setString(3, skill.getSkillName());
 		stmt.setString(4, skill.getSkillDescription());
-		stmt.setString(5, skill.getStatus());
+		//stmt.setString(5, skill.getStatus());
 
 	}
 
