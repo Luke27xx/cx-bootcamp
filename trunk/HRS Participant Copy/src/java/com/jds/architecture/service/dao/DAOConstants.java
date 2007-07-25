@@ -88,7 +88,7 @@ public class DAOConstants {
 	protected static String PROJ_CREATE = 
 		"INSERT INTO project (id, name, description," +
 		" startdate, enddate, clientname)" +
-		" VALUES ( ? , ? , ? ,  ? ,  ? , ? )";
+		" VALUES ( ? , ? , ? , ? , ? , ? )";
 	protected static String PROJ_UPDATE_MAIN =  "UPDATE project SET @ WHERE @ ";
 	protected static String PROJ_DELETE = "DELETE project WHERE id =  ? ";
 	protected static String PROJ_FIND_MAIN = "SELECT * FROM project WHERE @ ";
