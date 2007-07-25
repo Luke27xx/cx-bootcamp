@@ -51,7 +51,7 @@ public class StatementGenProject extends StatementGenerator {
          
         
 		if(obj.getProjectId() != null) {			
-			strBuffer.append(getColumnValue(isSet, DAOConstants.COL_PROJID, 
+			strBuffer.append(getColumnValue(isSet, DAOConstants.COL_ID, 
 					obj.getProjectId(), strConstant));				
 			
 		} 
