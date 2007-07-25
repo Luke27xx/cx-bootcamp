@@ -32,7 +32,7 @@ public class ProjectAssembler {
 	 * @throws SQLException 
 	 */
 	public static void  getPreparedStatement(ProjectInfo project, 
-			PreparedStatement stmt) throws SQLException {
+		PreparedStatement stmt) throws SQLException {
 		stmt.setString(1, project.getProjectId());
 		stmt.setString(2, project.getProjectName());
 		stmt.setString(3, project.getProjectDescrition());
@@ -52,9 +52,9 @@ public class ProjectAssembler {
 		projectReturn.setProjectId(rs.getString("id"));
 		projectReturn.setProjectName(rs.getString("name"));
 		projectReturn.setProjectDescription(rs.getString("description"));
-		projectReturn.setStartDate(new java.util.Date(((java.sql.Timestamp)rs.getObject("startDate")).getTime()));
-		projectReturn.setEndDate(new java.util.Date(((java.sql.Timestamp)rs.getObject("endDate")).getTime()));
-		projectReturn.setClient(rs.getString("clientName "));		
+		projectReturn.setStartDate(new java.util.Date(((java.sql.Date)rs.getObject("startDate")).getTime()));
+		projectReturn.setEndDate(new java.util.Date(((java.sql.Date)rs.getObject("endDate")).getTime()));
+		projectReturn.setClient(rs.getString("clientName"));		
 		return projectReturn;
 	}
 	
