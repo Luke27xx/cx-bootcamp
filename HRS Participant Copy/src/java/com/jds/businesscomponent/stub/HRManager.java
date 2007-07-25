@@ -26,7 +26,7 @@ import com.jds.businesscomponent.hr.SkillBC;
 
 /**
  * 
- * @author r.c.delos.santos Feb 16, 2005
+ * @author MegaGOD Feb 16, 2005
  * @author last modified by: $Author: c.b.balajadia $
  * @version $Revision: 1.2 $ $Date: 2005/05/05 04:28:32 $
  *
